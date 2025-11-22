@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: josegustavo/omegasalud
   branch: main
 
 # Local backend for development (optional, set to true to test locally without auth)
