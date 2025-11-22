@@ -1,5 +1,8 @@
 {
     "name": "omegasalud",
     "compatibility_date": "2025-11-22",
-    "pages_build_output_dir": "./dist"
+    "main": "./dist/_worker.js/index.js",
+    "assets": {
+        "directory": "./dist"
+    }
 }

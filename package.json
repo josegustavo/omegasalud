@@ -11,6 +11,7 @@
     "local": "npx wrangler pages dev -- npm run dev"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.11",
     "@astrojs/sitemap": "^3.6.0",
     "@nanostores/persistent": "^1.2.0",
     "@supabase/supabase-js": "^2.84.0",
