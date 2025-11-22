@@ -1,0 +1,63 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { products, categories } from "../../data/products";
+
+export function getStaticPaths() {
+    return categories.map((cat) => ({
+        params: { slug: cat.id },
+        props: { category: cat },
+    }));
+}
+
+const { category } = Astro.props;
+const categoryProducts = products.filter(
+    (p) => p.categories && p.categories.includes(category.id),
+);
+---
+
+<Layout>
+    <Navbar />
+
+    <main class="container mx-auto px-4 py-12 min-h-[80vh]">
+        <div class="text-sm breadcrumbs mb-6">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li class="font-bold">{category.name}</li>
+            </ul>
+        </div>
+
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-primary mb-4">
+                {category.name}
+            </h1>
+            <p class="text-base-content/70 max-w-2xl mx-auto">
+                Explora nuestra selección de {category.name.toLowerCase()}.
+                Productos 100% naturales y saludables para ti.
+            </p>
+        </div>
+
+        {
+            categoryProducts.length > 0 ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {categoryProducts.map((product) => (
+                        <ProductCard {...product} />
+                    ))}
+                </div>
+            ) : (
+                <div class="text-center py-20">
+                    <p class="text-xl text-base-content/60">
+                        No hay productos en esta categoría por el momento.
+                    </p>
+                    <a href="/" class="btn btn-primary mt-4">
+                        Ver todos los productos
+                    </a>
+                </div>
+            )
+        }
+    </main>
+
+    <Footer />
+</Layout>

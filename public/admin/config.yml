@@ -1,0 +1,121 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Local backend for development (optional, set to true to test locally without auth)
+local_backend: true
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+locale: 'es'
+
+collections:
+  - name: "config"
+    label: "Configuración"
+    files:
+      - name: "site"
+        label: "Configuración del Sitio"
+        file: "src/data/site.yml"
+        fields:
+          - {label: "Nombre del Sitio", name: "name", widget: "string"}
+          - {label: "Eslogan", name: "tagline", widget: "string"}
+          - {label: "Descripción", name: "description", widget: "text"}
+          - {label: "URL del Sitio", name: "url", widget: "string"}
+          - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "Tema Claro (Día)", name: "theme", widget: "select", options: ["omegasalud-light", "light", "cupcake", "bumblebee", "emerald", "corporate", "retro", "valentine", "garden", "aqua", "lofi", "pastel", "fantasy", "wireframe", "cmyk", "autumn", "acid", "lemonade", "winter"], default: "omegasalud-light"}
+          - {label: "Tema Oscuro (Noche)", name: "darkTheme", widget: "select", options: ["omegasalud-dark", "dark", "synthwave", "cyberpunk", "halloween", "forest", "black", "luxury", "dracula", "business", "night", "coffee"], default: "omegasalud-dark"}
+          - label: "Redes Sociales"
+            name: "social"
+            widget: "object"
+            fields:
+              - {label: "Teléfono", name: "phone", widget: "string"}
+              - {label: "WhatsApp", name: "whatsapp", widget: "string"}
+              - {label: "Email", name: "email", widget: "string"}
+          - label: "Dirección"
+            name: "address"
+            widget: "object"
+            fields:
+              - {label: "Calle", name: "street", widget: "string"}
+              - {label: "Ciudad", name: "city", widget: "string"}
+              - {label: "Región", name: "region", widget: "string"}
+              - {label: "Código Postal", name: "postalCode", widget: "string"}
+              - {label: "País", name: "country", widget: "string"}
+          - label: "SEO"
+            name: "seo"
+            widget: "object"
+            fields:
+              - {label: "Título por Defecto", name: "defaultTitle", widget: "string"}
+              - {label: "Descripción por Defecto", name: "defaultDescription", widget: "text"}
+              - {label: "Imagen Social", name: "socialImage", widget: "image"}
+
+  - name: "hero"
+    label: "Hero (Slider)"
+    files:
+      - name: "hero_slides"
+        label: "Slides del Hero"
+        file: "src/data/hero.yml"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Texto Botón", name: "buttonText", widget: "string"}
+              - {label: "Enlace", name: "link", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Fondo", name: "bgClass", widget: "select", options: ["bg-linear-to-br from-primary/10 via-base-100 to-secondary/10", "bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100", "bg-linear-to-br from-green-100 via-emerald-50 to-teal-100", "bg-linear-to-br from-blue-100 via-cyan-50 to-sky-100"]}
+
+  - name: "promotions"
+    label: "Promociones"
+    files:
+      - name: "promotions_list"
+        label: "Lista de Promociones"
+        file: "src/data/promotions.yml"
+        fields:
+          - label: "Promociones"
+            name: "promotions"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+              - {label: "Texto Botón", name: "buttonText", widget: "string"}
+              - {label: "Enlace", name: "link", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Color", name: "color", widget: "select", options: ["orange", "yellow", "red"]}
+
+  - name: "categories"
+    label: "Categorías"
+    folder: "src/data/categories"
+    create: true
+    slug: "{{slug}}"
+    extension: "yml"
+    format: "yaml"
+    fields:
+      - {label: "Nombre", name: "name", widget: "string"}
+      - {label: "Icono", name: "icon", widget: "string"}
+
+  - name: "products"
+    label: "Productos"
+    folder: "src/data/products"
+    create: true
+    slug: "{{slug}}"
+    extension: "yml"
+    format: "yaml"
+    fields:
+      - {label: "Nombre", name: "name", widget: "string"}
+      - {label: "Marca", name: "brand", widget: "string"}
+      - {label: "Presentación", name: "presentation", widget: "string"}
+      - {label: "Precio", name: "price", widget: "number", value_type: "float"}
+      - {label: "Precio Original", name: "originalPrice", widget: "number", value_type: "float", required: false}
+      - {label: "Imágenes", name: "images", widget: "list", field: {label: "URL de Imagen", name: "image", widget: "image"}}
+      - {label: "Categorías", name: "categories", widget: "relation", collection: "categories", search_fields: ["name"], value_field: "{{slug}}", display_fields: ["name"], multiple: true}
+      - {label: "ID de Variante (Agrupar)", name: "variantId", widget: "string", required: false, hint: "Usa el mismo ID para productos que son variaciones (ej: 'sal-maras')"}
+      - {label: "Nombre de Variante (Ej: 500g)", name: "variantName", widget: "string", required: false}
+      - {label: "Etiquetas", name: "tags", widget: "list", required: false}
+      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Propiedades", name: "properties", widget: "list", required: false}
+      - {label: "Beneficios", name: "benefits", widget: "list", required: false}
+      - {label: "Uso", name: "usage", widget: "text", required: false}
+      - {label: "Video URL", name: "video", widget: "string", required: false}

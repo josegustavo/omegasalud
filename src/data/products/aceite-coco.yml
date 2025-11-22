@@ -1,0 +1,21 @@
+
+name: Aceite de Coco
+brand: Coco Pure
+presentation: Frasco 250ml
+price: 28
+originalPrice: 28
+images:
+  - /images/uploads/generated-image-november-22-2025-1_09am.png
+  - /images/uploads/aceite.png
+categories:
+  - aceites
+tags:
+  - Cosmético
+  - Vegano
+description: Aceite de coco virgen, ideal para cocinar a altas temperaturas o
+  para uso cosmético en piel y cabello. Aroma suave y textura ligera.
+properties:
+  - Virgen
+  - Uso culinario y cosmético
+  - Hidratante
+  - Rico en ácidos grasos

@@ -1,0 +1,216 @@
+---
+import { categories } from "../data/products";
+import siteConfig from "../data/site.yml";
+---
+
+<div
+    class="navbar bg-base-100 shadow-sm sticky top-0 z-50 font-outfit text-base-content"
+>
+    <div class="navbar-start">
+        <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h8m-8 6h16"></path></svg
+                >
+            </div>
+            <ul
+                tabindex="0"
+                class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow-xl bg-base-100 rounded-box w-80 text-base-content"
+            >
+                <li><a href="/" class="font-semibold">🏠 Inicio</a></li>
+                <li>
+                    <details open>
+                        <summary class="font-semibold">📦 Categorías</summary>
+                        <ul>
+                            {
+                                categories.map((cat) => (
+                                    <li>
+                                        <a
+                                            href={`/categoria/${cat.id}`}
+                                            class="flex gap-3 items-center py-3"
+                                        >
+                                            <span class="text-2xl">
+                                                {cat.icon}
+                                            </span>
+                                            <span class="text-lg">
+                                                {cat.name}
+                                            </span>
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </details>
+                </li>
+                <li>
+                    <a href="/nosotros" class="font-semibold">👥 Nosotros</a>
+                </li>
+                <li>
+                    <a href="/terminos" class="font-semibold">📜 Términos</a>
+                </li>
+            </ul>
+        </div>
+        <a
+            href="/"
+            class="normal-case gap-1 hover:opacity-80 transition-opacity px-2 flex items-center"
+        >
+            <img
+                src={siteConfig.logo}
+                alt={siteConfig.name}
+                class="h-10 w-auto"
+            />
+        </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1 text-base">
+            <li><a href="/" class="font-medium">Inicio</a></li>
+            <li>
+                <details>
+                    <summary class="font-medium">Categorías</summary>
+                    <ul
+                        class="p-2 bg-base-100 rounded-t-none w-56 shadow-lg text-base-content"
+                    >
+                        {
+                            categories.map((cat) => (
+                                <li>
+                                    <a
+                                        href={`/categoria/${cat.id}`}
+                                        class="flex gap-2 items-center py-2"
+                                    >
+                                        <span class="text-xl">{cat.icon}</span>
+                                        <span>{cat.name}</span>
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </details>
+            </li>
+            <li><a href="/nosotros" class="font-medium">Nosotros</a></li>
+        </ul>
+    </div>
+    <div class="navbar-end">
+        <div class="dropdown dropdown-end" id="cart-dropdown">
+            <div
+                tabindex="0"
+                role="button"
+                class="btn btn-ghost btn-circle group"
+            >
+                <div class="indicator">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path>
+                    </svg>
+                    <span
+                        class="badge badge-sm indicator-item badge-primary transition-transform duration-200 whitespace-nowrap w-5 h-5 p-0 flex justify-center items-center"
+                        id="cart-count">0</span
+                    >
+                </div>
+            </div>
+            <div
+                tabindex="0"
+                class="mt-3 z-1 card card-compact dropdown-content w-52 bg-base-100 shadow-xl text-base-content"
+            >
+                <div class="card-body">
+                    <span class="font-bold text-lg" id="cart-items-count"
+                        >0 Items</span
+                    >
+                    <span class="text-primary font-bold" id="cart-subtotal"
+                        >Subtotal: S/ 0.00</span
+                    >
+                    <div class="card-actions">
+                        <label
+                            for="cart-drawer"
+                            class="btn btn-primary btn-block text-white"
+                            >Ver Mi Pedido</label
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes pop {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    .animate-pop {
+        animation: pop 0.3s ease-in-out;
+    }
+</style>
+
+<script>
+    import { cartItems } from "../store/cart";
+
+    const cartCount = document.getElementById("cart-count");
+    const cartItemsCount = document.getElementById("cart-items-count");
+    const cartSubtotal = document.getElementById("cart-subtotal");
+
+    const cartDropdown = document.getElementById("cart-dropdown");
+    let previousCount = -1; // Initialize to -1 to detect first load
+    let dropdownTimeout: number;
+
+    cartItems.subscribe((items) => {
+        const count = Object.values(items).reduce(
+            (acc, item) => acc + item.quantity,
+            0,
+        );
+        const subtotal = Object.values(items).reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0,
+        );
+
+        if (cartCount) {
+            cartCount.innerText = count.toString();
+
+            // Trigger animation and open dropdown if count increased (and not first load)
+            if (previousCount !== -1 && count > previousCount) {
+                cartCount.classList.remove("animate-pop");
+                void cartCount.offsetWidth; // trigger reflow
+                cartCount.classList.add("animate-pop");
+
+                // Open dropdown temporarily
+                if (cartDropdown) {
+                    cartDropdown.classList.add("dropdown-open");
+                    if (dropdownTimeout) clearTimeout(dropdownTimeout);
+                    dropdownTimeout = setTimeout(() => {
+                        cartDropdown.classList.remove("dropdown-open");
+                    }, 2500);
+                }
+            }
+            previousCount = count;
+        }
+
+        if (cartItemsCount) cartItemsCount.innerText = `${count} Items`;
+        if (cartSubtotal)
+            cartSubtotal.innerText = `Subtotal: S/ ${subtotal.toFixed(2)}`;
+    });
+</script>

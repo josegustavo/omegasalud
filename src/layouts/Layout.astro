@@ -1,0 +1,137 @@
+---
+import CartDrawer from "../components/CartDrawer.astro";
+import siteConfig from "../data/site.yml";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	type?: "website" | "article";
+}
+
+const {
+	title = siteConfig.seo.defaultTitle,
+	description = siteConfig.seo.defaultDescription,
+	image = siteConfig.seo.socialImage,
+	type = "website",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.url);
+---
+
+<!doctype html>
+<html lang="es" data-theme={siteConfig.theme || "emerald"}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+
+        <!-- Theme Script -->
+        <script is:inline define:vars={{ lightTheme: siteConfig.theme || "emerald", darkTheme: siteConfig.darkTheme || "dracula" }}>
+            function updateTheme() {
+                const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                const theme = isDark ? darkTheme : lightTheme;
+                document.documentElement.setAttribute("data-theme", theme);
+            }
+            // Initial check
+            updateTheme();
+            // Listen for changes
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateTheme);
+        </script>
+
+		<!-- SEO -->
+		<title>{title}</title>
+		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImageURL} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={socialImageURL} />
+
+		<!-- Organization Schema -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Store",
+				"name": siteConfig.name,
+				"image": siteConfig.url + siteConfig.logo,
+				"description": siteConfig.description,
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": siteConfig.address.street,
+					"addressLocality": siteConfig.address.city,
+					"addressRegion": siteConfig.address.region,
+					"postalCode": siteConfig.address.postalCode,
+					"addressCountry": siteConfig.address.country
+				},
+				"url": siteConfig.url,
+				"telephone": siteConfig.phone
+			}
+		</script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="antialiased font-sans">
+		<div class="drawer drawer-end">
+			<input id="cart-drawer" type="checkbox" class="drawer-toggle" />
+			<div class="drawer-content flex flex-col min-h-screen">
+				<slot />
+			</div>
+			<div class="drawer-side z-50">
+				<label
+					for="cart-drawer"
+					aria-label="close sidebar"
+					class="drawer-overlay"></label>
+				<div
+					class="menu p-4 w-80 min-h-full bg-base-200 text-base-content flex flex-col"
+				>
+					<CartDrawer />
+				</div>
+			</div>
+		</div>
+		<script>
+			import { inView, animate } from "motion";
+
+			// Global animation for elements with .animate-on-scroll
+			inView(".animate-on-scroll", (element) => {
+				animate(
+					element,
+					{ opacity: [0, 1], y: [30, 0] },
+					{ duration: 0.6, easing: "ease-out" },
+				);
+			});
+
+			// Staggered animation for grids (like product cards)
+			inView(".animate-grid", (element) => {
+				const children = element.querySelectorAll(".animate-item");
+				animate(
+					children,
+					{ opacity: [0, 1], y: [20, 0] },
+					{ duration: 0.5, delay: 0.1, easing: "ease-out" }, // Staggering handled by delay if needed, or just simple batch
+				);
+			});
+		</script>
+	</body>
+</html>
+
+<script>
+	import "../styles/global.css";
+</script>

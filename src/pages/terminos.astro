@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import siteConfig from "../data/site.yml";
+---
+
+<Layout title={`Términos y Condiciones | ${siteConfig.name}`}>
+    <Navbar />
+    <main class="container mx-auto px-4 py-12 min-h-[80vh]">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl font-bold text-primary mb-8">
+                Términos y Condiciones
+            </h1>
+            <div class="prose lg:prose-lg">
+                <p class="text-lg leading-relaxed mb-6">
+                    Bienvenido a {siteConfig.name}. Al realizar un pedido con
+                    nosotros, aceptas los siguientes términos y condiciones.
+                </p>
+
+                <h3>1. Pedidos y Pagos</h3>
+                <p>
+                    Los pedidos se coordinan a través de WhatsApp. El pago se
+                    puede realizar mediante Yape, Plin o transferencia bancaria
+                    al momento de confirmar el pedido o contra entrega, según
+                    coordinación previa.
+                </p>
+
+                <h3>2. Envíos y Entregas</h3>
+                <p>
+                    Realizamos envíos en la zona de Huaycán, Ate y alrededores.
+                    El tiempo de entrega dependerá de la disponibilidad y la
+                    hora del pedido. Los costos de envío pueden variar según la
+                    ubicación exacta.
+                </p>
+
+                <h3>3. Devoluciones</h3>
+                <p>
+                    Por ser productos alimenticios y naturales, solo aceptamos
+                    devoluciones si el producto llega en mal estado o no
+                    corresponde al pedido realizado. Debes notificar cualquier
+                    inconveniente al momento de la recepción.
+                </p>
+
+                <h3>4. Privacidad</h3>
+                <p>
+                    Tus datos personales (nombre y teléfono) son utilizados
+                    únicamente para procesar y entregar tu pedido. No
+                    compartimos tu información con terceros.
+                </p>
+
+                <h3>5. Contacto</h3>
+                <p>
+                    Cualquier duda o consulta puede ser realizada a través de
+                    nuestro WhatsApp o redes sociales oficiales.
+                </p>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>

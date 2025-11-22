@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light, dark, cupcake, bumblebee, emerald, corporate, synthwave, retro, cyberpunk, valentine, halloween, garden, forest, aqua, lofi, pastel, fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid, lemonade, night, coffee, winter;
+}
+
+@theme {
+  --font-sans: 'Outfit', sans-serif;
+}
+
+/* Custom Themes */
+[data-theme="omegasalud-light"] {
+  --color-primary: oklch(65% 0.18 145);
+  --color-primary-content: oklch(98% 0.01 150);
+  --color-secondary: oklch(70% 0.15 50);
+  --color-secondary-content: oklch(98% 0.01 150);
+  --color-accent: oklch(85% 0.15 90);
+  --color-accent-content: oklch(20% 0.05 260);
+  --color-neutral: oklch(30% 0.05 260);
+  --color-neutral-content: oklch(98% 0.01 150);
+  --color-base-100: oklch(98% 0.01 150);
+  --color-base-200: oklch(95% 0.01 150);
+  --color-base-300: oklch(92% 0.01 150);
+  --color-base-content: oklch(20% 0.02 150);
+  --color-info: oklch(70% 0.15 240);
+  --color-success: oklch(65% 0.18 145);
+  --color-warning: oklch(85% 0.15 90);
+  --color-error: oklch(60% 0.18 30);
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
+}
+
+[data-theme="omegasalud-dark"] {
+  --color-primary: oklch(60% 0.18 145);
+  --color-primary-content: oklch(98% 0.01 150);
+  --color-secondary: oklch(65% 0.15 50);
+  --color-secondary-content: oklch(98% 0.01 150);
+  --color-accent: oklch(80% 0.15 90);
+  --color-accent-content: oklch(20% 0.05 260);
+  --color-neutral: oklch(20% 0.05 260);
+  --color-neutral-content: oklch(98% 0.01 150);
+  --color-base-100: oklch(15% 0.02 150);
+  --color-base-200: oklch(12% 0.02 150);
+  --color-base-300: oklch(10% 0.02 150);
+  --color-base-content: oklch(90% 0.02 150);
+  --color-info: oklch(60% 0.15 240);
+  --color-success: oklch(60% 0.18 145);
+  --color-warning: oklch(80% 0.15 90);
+  --color-error: oklch(55% 0.18 30);
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
+}

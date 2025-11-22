@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Footer from "../components/Footer.astro";
+import ProductCard from "../components/ProductCard.astro";
+import Promotions from "../components/Promotions.astro";
+
+import { products } from "../data/products";
+import siteConfig from "../data/site.yml";
+---
+
+<Layout
+	title={`${siteConfig.name} - ${siteConfig.tagline}`}
+	description={siteConfig.description}
+>
+	<Navbar />
+	<Hero />
+
+	<Promotions />
+
+	<main class="container mx-auto px-4 py-8 animate-grid" id="products">
+		<h2 class="text-3xl font-bold text-center mb-8 text-primary">
+			Nuestros Productos
+		</h2>
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+			{
+				products.map((product) => (
+					<div class="animate-item opacity-0">
+						<ProductCard {...product} />
+					</div>
+				))
+			}
+		</div>
+	</main>
+
+	<Footer />
+</Layout>

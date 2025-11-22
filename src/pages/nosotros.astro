@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import siteConfig from "../data/site.yml";
+---
+
+<Layout title={`Nosotros | ${siteConfig.name}`}>
+    <Navbar />
+    <main class="container mx-auto px-4 py-12 min-h-[80vh]">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl font-bold text-primary mb-8">Nosotros</h1>
+            <div class="prose lg:prose-lg">
+                <p class="text-lg leading-relaxed mb-6">
+                    En <strong>{siteConfig.name}</strong>, nos dedicamos a
+                    llevar bienestar a tu hogar a través de productos naturales
+                    de la más alta calidad.
+                </p>
+
+                <img
+                    src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
+                    alt="Naturaleza y Salud"
+                    class="w-full h-64 object-cover rounded-2xl my-8 shadow-lg"
+                />
+
+                <h3>Nuestra Misión</h3>
+                <p>
+                    Fomentar un estilo de vida saludable ofreciendo alternativas
+                    naturales, libres de químicos y procesados, apoyando a
+                    productores locales y respetando el medio ambiente.
+                </p>
+
+                <h3>¿Por qué elegirnos?</h3>
+                <ul>
+                    <li>
+                        <strong>Calidad Garantizada:</strong> Seleccionamos rigurosamente
+                        cada producto.
+                    </li>
+                    <li>
+                        <strong>Atención Personalizada:</strong> Te asesoramos en
+                        tu compra vía WhatsApp.
+                    </li>
+                    <li>
+                        <strong>Entrega Rápida:</strong> Llevamos tu pedido a la
+                        puerta de tu casa en Huaycán y alrededores.
+                    </li>
+                </ul>
+
+                <h3>Nuestra Historia</h3>
+                <p>
+                    Nacimos con la idea de que la salud empieza por la
+                    alimentación. Lo que comenzó como un pequeño emprendimiento
+                    familiar, hoy busca ser tu aliado principal en nutrición y
+                    bienestar natural.
+                </p>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>

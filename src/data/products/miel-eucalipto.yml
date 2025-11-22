@@ -1,0 +1,17 @@
+name: Miel de Eucalipto
+brand: Apiario Real
+presentation: Frasco 1kg
+price: 45
+originalPrice: 55
+images:
+  - https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=800&auto=format&fit=crop
+categories:
+  - miel
+tags:
+  - Medicinal
+  - Orgánico
+description: Miel de floración de eucalipto. Color ámbar oscuro y sabor mentolado. Ideal para afecciones respiratorias.
+properties:
+  - Expectorante natural
+  - Antibacteriano
+  - Sabor intenso

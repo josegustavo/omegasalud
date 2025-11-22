@@ -1,0 +1,21 @@
+name: Stevia Natural 100%
+brand: Dulce Vida
+presentation: Frasco 100g
+price: 25
+images:
+  - https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop
+  - https://images.unsplash.com/photo-1518635017498-87f514b751ba?q=80&w=800&auto=format&fit=crop
+categories:
+  - endulzantes
+  - aceites
+tags:
+  - Sin Azúcar
+  - Keto
+description: Endulzante natural cero calorías. Perfecto para diabéticos y
+  personas que cuidan su peso. No deja sabor amargo y rinde mucho más que el
+  azúcar convencional.
+properties:
+  - Cero calorías
+  - Apto para diabéticos
+  - Sin sabor amargo
+  - Origen vegetal

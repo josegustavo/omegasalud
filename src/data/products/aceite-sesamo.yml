@@ -1,0 +1,18 @@
+name: Aceite de Sésamo Tostado
+brand: Asian Flavors
+presentation: Botella 250ml
+price: 35
+originalPrice: 42
+images:
+  - https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=800&auto=format&fit=crop
+categories:
+  - aceites
+  - condimentos
+tags:
+  - Gourmet
+  - Asiático
+description: Aceite de sésamo tostado de aroma intenso. Perfecto para finalizar platos asiáticos, ensaladas y marinados.
+properties:
+  - Aroma intenso
+  - Rico en antioxidantes
+  - Prensado en frío

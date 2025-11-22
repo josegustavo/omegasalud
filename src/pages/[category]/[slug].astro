@@ -1,0 +1,337 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { products } from "../../data/products";
+import siteConfig from "../../data/site.yml";
+
+export async function getStaticPaths() {
+    // Generate paths for every category the product belongs to
+    return products.flatMap((product) => {
+        const productCategories = product.categories || [];
+
+        // If no categories, use 'producto' as fallback
+        if (productCategories.length === 0) {
+            return [
+                {
+                    params: { category: "producto", slug: product.id },
+                    props: { product },
+                },
+            ];
+        }
+
+        return productCategories.map((category) => ({
+            params: { category: category, slug: product.id },
+            props: { product },
+        }));
+    });
+}
+
+const { product } = Astro.props;
+const { category } = Astro.params;
+
+// Filter related products: same category, excluding current product
+const relatedProducts = products
+    .filter(
+        (p) =>
+            p.id !== product.id &&
+            p.categories?.some((c) => product.categories?.includes(c)),
+    )
+    .slice(0, 4);
+
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.images[0],
+    description: product.description,
+    brand: {
+        "@type": "Brand",
+        name: product.brand,
+    },
+    offers: {
+        "@type": "Offer",
+        url: Astro.url.href,
+        priceCurrency: "PEN",
+        price: product.price,
+        availability: "https://schema.org/InStock",
+    },
+};
+---
+
+<Layout
+    title={`${product.name} | ${siteConfig.name}`}
+    description={product.description}
+    image={product.images[0]}
+    type="article"
+>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <Navbar />
+
+    <main class="container mx-auto px-4 py-8 min-h-[80vh]">
+        <div class="text-sm breadcrumbs mb-6">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href={`/categoria/${category}`}>{category}</a></li>
+                <li class="font-bold">{product.name}</li>
+            </ul>
+        </div>
+
+        <div
+            class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 animate-on-scroll"
+        >
+            <!-- Image Gallery -->
+            <div class="space-y-4">
+                <div
+                    class="rounded-2xl overflow-hidden shadow-lg border border-base-200 bg-base-100"
+                >
+                    <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        class="w-full h-96 object-contain p-4"
+                        id="main-image"
+                    />
+                </div>
+                <div class="flex gap-4 overflow-x-auto pb-2">
+                    {
+                        product.images.map((img, index) => (
+                            <button
+                                class="w-20 h-20 rounded-lg border-2 border-transparent hover:border-primary overflow-hidden transition-all thumbnail"
+                                data-src={img}
+                            >
+                                <img
+                                    src={img}
+                                    alt={`${product.name} ${index + 1}`}
+                                    class="w-full h-full object-cover"
+                                />
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="space-y-6">
+                <div>
+                    <div class="badge badge-primary badge-outline mb-2">
+                        {product.brand}
+                    </div>
+                    <h1 class="text-4xl font-bold text-base-content mb-2">
+                        {product.name}
+                    </h1>
+                    <p class="text-lg text-base-content/70">
+                        {product.presentation}
+                    </p>
+                </div>
+
+                <!-- Variants Selector -->
+                {
+                    product.variantId &&
+                        products.some(
+                            (p) =>
+                                p.variantId === product.variantId &&
+                                p.id !== product.id,
+                        ) && (
+                            <div>
+                                <h3 class="text-sm font-bold uppercase tracking-wider mb-3 text-base-content/70">
+                                    Presentaciones:
+                                </h3>
+                                <div class="flex flex-wrap gap-3">
+                                    {products
+                                        .filter(
+                                            (p) =>
+                                                p.variantId &&
+                                                p.variantId ===
+                                                    product.variantId,
+                                        )
+                                        .sort((a, b) => a.price - b.price) // Sort by price usually implies size
+                                        .map((variant) => {
+                                            const isActive =
+                                                variant.id === product.id;
+                                            // Find URL for this variant (try to keep same category if possible)
+                                            const variantUrl = `/${category}/${variant.id}`;
+
+                                            return (
+                                                <a
+                                                    href={variantUrl}
+                                                    class={`
+                                                    px-4 py-2 rounded-lg border-2 transition-all font-bold text-sm
+                                                    ${
+                                                        isActive
+                                                            ? "border-primary bg-primary/10 text-primary cursor-default"
+                                                            : "border-base-300 hover:border-primary/50 text-base-content/70 hover:text-primary bg-base-100"
+                                                    }
+                                                `}
+                                                >
+                                                    {variant.variantName ||
+                                                        variant.presentation}
+                                                </a>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                        )
+                }
+
+                <div class="flex items-baseline gap-4">
+                    <span class="text-4xl font-bold text-primary"
+                        >S/ {product.price.toFixed(2)}</span
+                    >
+                    {
+                        product.originalPrice && (
+                            <span class="text-xl text-base-content/40 line-through">
+                                S/ {product.originalPrice.toFixed(2)}
+                            </span>
+                        )
+                    }
+                    {
+                        product.originalPrice && (
+                            <div class="badge badge-secondary font-bold px-2">
+                                -
+                                {Math.round(
+                                    ((product.originalPrice - product.price) /
+                                        product.originalPrice) *
+                                        100,
+                                )}
+                                %
+                            </div>
+                        )
+                    }
+                </div>
+
+                <p class="text-base-content/80 leading-relaxed text-lg">
+                    {product.description}
+                </p>
+
+                <div class="divider"></div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-3">Características:</h3>
+                    <ul class="space-y-2">
+                        {
+                            product.properties.map((prop) => (
+                                <li class="flex items-center gap-2">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-success"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                    {prop}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="flex gap-4">
+                    <button
+                        class="btn btn-primary btn-lg flex-1 shadow-xl add-to-cart-detail"
+                        data-id={product.id}
+                        data-name={product.name}
+                        data-price={product.price}
+                        data-image={product.images[0]}
+                    >
+                        Agregar al Pedido
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 ml-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="mt-24">
+            <h2 class="text-3xl font-bold text-center mb-12">
+                También te podría interesar
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {
+                    relatedProducts.map((related) => (
+                        <div class="transform hover:-translate-y-1 transition-transform duration-300">
+                            <ProductCard {...related} />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
+
+<script>
+    import { addCartItem } from "../../store/cart";
+    import { playAddToCartSound } from "../../utils/sound";
+
+    // Image Gallery Logic
+    const mainImage = document.getElementById("main-image") as HTMLImageElement;
+    const thumbnails = document.querySelectorAll(".thumbnail");
+
+    thumbnails.forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+            const src = (thumb as HTMLElement).dataset.src;
+            if (src && mainImage) {
+                mainImage.src = src;
+                // Update active state
+                thumbnails.forEach((t) => t.classList.remove("border-primary"));
+                thumb.classList.add("border-primary");
+            }
+        });
+    });
+
+    // Add to Cart Logic
+    const addToCartBtn = document.querySelector(".add-to-cart-detail");
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener("click", () => {
+            playAddToCartSound();
+            const btn = addToCartBtn as HTMLElement;
+            const { id, name, price, image } = btn.dataset;
+
+            addCartItem({
+                id: id!,
+                name: name!,
+                price: Number(price),
+                image: image!,
+            });
+
+            // Feedback
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = "¡Agregado al Pedido!";
+            btn.classList.add("btn-success");
+
+            // Open drawer (optional, or just show toast)
+            const drawerCheckbox = document.getElementById(
+                "cart-drawer",
+            ) as HTMLInputElement;
+            if (drawerCheckbox) drawerCheckbox.checked = true;
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove("btn-success");
+            }, 2000);
+        });
+    }
+</script>

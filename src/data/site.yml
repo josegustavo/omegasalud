@@ -1,0 +1,29 @@
+name: Omega Salud
+tagline: Productos Naturales
+description: Tienda de productos naturales y saludables en Huaycán. Aceites,
+  miel, endulzantes y más.
+url: https://omegasalud.pe
+logo: /images/uploads/logo.svg
+theme: omegasalud-light
+social:
+  facebook: ""
+  instagram: ""
+  twitter: ""
+  phone: "946072468"
+  whatsapp: "946072468"
+  email: jose.quilca@outlook.com
+phone: "+51999999999"
+whatsapp: "+51999999999"
+darkTheme: omegasalud-dark
+address:
+  street: Huaycán
+  city: Ate
+  region: Lima
+  postalCode: "15479"
+  country: PE
+email: contacto@omegasalud.pe
+seo:
+  defaultTitle: Omega Salud - Productos Naturales
+  defaultDescription: Tienda de productos naturales y saludables en Huaycán.
+    Aceites, miel, endulzantes y más.
+  socialImage: /images/uploads/generated-image-november-22-2025-1_09am.png

@@ -1,0 +1,223 @@
+---
+import heroSlides from "../data/hero.yml";
+---
+
+<div class="relative group">
+    <!-- Slider Container -->
+    <div
+        class="carousel w-full min-h-[60vh] overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
+        id="hero-slider"
+    >
+        {
+            heroSlides.slides.map((slide: any, index: number) => (
+                <div
+                    id={`slide${index}`}
+                    class={`carousel-item relative w-full snap-center flex items-center justify-center ${slide.bgClass}`}
+                >
+                    <div class="hero-content flex-col lg:flex-row-reverse gap-8 lg:gap-12 max-w-6xl mx-auto px-4 py-12">
+                        <img
+                            src={slide.image}
+                            alt={slide.title}
+                            class="max-w-sm rounded-2xl shadow-2xl w-full lg:w-1/2 object-cover h-64 lg:h-96 transform hover:scale-100 transition-transform duration-500"
+                        />
+                        <div class="text-center lg:text-left lg:w-1/2 animate-on-scroll">
+                            <h1 class="text-4xl lg:text-6xl font-bold text-primary mb-6 drop-shadow-sm leading-tight">
+                                {slide.title}
+                            </h1>
+                            <p class="py-6 text-lg lg:text-xl text-base-content/80 leading-relaxed">
+                                {slide.description}
+                            </p>
+                            <a
+                                href={slide.link}
+                                class="btn btn-primary btn-lg shadow-lg hover:scale-105 transition-transform rounded-full px-8 text-lg"
+                            >
+                                {slide.buttonText}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <!-- Navigation Dots -->
+    <div
+        class="absolute flex justify-center gap-2 bottom-5 left-0 right-0 z-20"
+    >
+        {
+            heroSlides.slides.map((_: any, index: number) => (
+                <a
+                    href={`#slide${index}`}
+                    class="btn btn-xs btn-circle bg-white/50 border-none hover:bg-primary hover:text-white transition-colors w-3 h-3 p-0"
+                    aria-label={`Go to slide ${index + 1}`}
+                    data-index={index}
+                />
+            ))
+        }
+    </div>
+
+    <!-- Arrows (Visible on hover on desktop) -->
+    <div
+        class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    >
+        <button
+            id="prev-slide"
+            class="btn btn-circle bg-white/80 border-none shadow-md pointer-events-auto hover:bg-white"
+        >
+            ❮
+        </button>
+        <button
+            id="next-slide"
+            class="btn btn-circle bg-white/80 border-none shadow-md pointer-events-auto hover:bg-white"
+        >
+            ❯
+        </button>
+    </div>
+</div>
+
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+</style>
+
+<script>
+    const slider = document.getElementById("hero-slider");
+    const slides = document.querySelectorAll(".carousel-item");
+    const dots = document.querySelectorAll("[data-index]");
+    const prevBtn = document.getElementById("prev-slide");
+    const nextBtn = document.getElementById("next-slide");
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let intervalId: any;
+
+    // Function to scroll to a specific slide
+    const scrollToSlide = (index: number) => {
+        if (!slider) return;
+
+        // Handle wrapping
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+
+        currentIndex = index;
+
+        // Calculate scroll position
+        const scrollAmount = slider.clientWidth * currentIndex;
+        slider.scrollTo({
+            left: scrollAmount,
+            behavior: "smooth",
+        });
+
+        updateActiveDot();
+    };
+
+    // Update active dot style
+    const updateActiveDot = () => {
+        dots.forEach((dot, idx) => {
+            if (idx === currentIndex) {
+                dot.classList.add("bg-primary");
+                dot.classList.remove("bg-white/50");
+            } else {
+                dot.classList.remove("bg-primary");
+                dot.classList.add("bg-white/50");
+            }
+        });
+    };
+
+    // Auto advance
+    const startAutoSlide = () => {
+        stopAutoSlide(); // Clear existing to prevent duplicates
+        intervalId = setInterval(() => {
+            scrollToSlide(currentIndex + 1);
+        }, 5000);
+    };
+
+    const stopAutoSlide = () => {
+        if (intervalId) clearInterval(intervalId);
+    };
+
+    // Event Listeners
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+            stopAutoSlide();
+            scrollToSlide(currentIndex - 1);
+            startAutoSlide();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            stopAutoSlide();
+            scrollToSlide(currentIndex + 1);
+            startAutoSlide();
+        });
+    }
+
+    // Manual navigation via dots
+    dots.forEach((dot) => {
+        dot.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent default anchor jump
+            stopAutoSlide();
+            const index = parseInt((dot as HTMLElement).dataset.index || "0");
+            scrollToSlide(index);
+            startAutoSlide();
+        });
+    });
+
+    // Detect manual scroll (touch/swipe) to update index
+    if (slider) {
+        let isScrolling: any;
+        slider.addEventListener("scroll", () => {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {
+                const scrollLeft = slider.scrollLeft;
+                const width = slider.clientWidth;
+                currentIndex = Math.round(scrollLeft / width);
+                updateActiveDot();
+            }, 100); // Debounce
+        });
+
+        // Pause on hover/touch
+        slider.addEventListener("mouseenter", stopAutoSlide);
+        slider.addEventListener("mouseleave", startAutoSlide);
+        slider.addEventListener("touchstart", stopAutoSlide);
+        slider.addEventListener("touchend", startAutoSlide);
+    }
+
+    // Initialize
+    updateActiveDot();
+    startAutoSlide();
+    // 3D Tilt Effect for Hero Images
+    const tiltSlides = document.querySelectorAll(".carousel-item");
+
+    tiltSlides.forEach((slide) => {
+        const image = slide.querySelector("img");
+        if (!image) return;
+
+        slide.addEventListener("mousemove", (e) => {
+            const evt = e as MouseEvent;
+            const { left, top, width, height } = slide.getBoundingClientRect();
+            const x = (evt.clientX - left) / width;
+            const y = (evt.clientY - top) / height;
+
+            // Calculate rotation (max 15 degrees)
+            const rotateX = (0.5 - y) * 30; // Reverse direction for "against mouse" feel
+            const rotateY = (x - 0.5) * 30;
+
+            image.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.0)`;
+            image.style.transition = "transform 0.1s ease-out";
+        });
+
+        slide.addEventListener("mouseleave", () => {
+            image.style.transform =
+                "perspective(1000px) rotateX(0) rotateY(0) scale(1)";
+            image.style.transition = "transform 0.5s ease-out";
+        });
+    });
+</script>

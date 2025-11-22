@@ -1,0 +1,71 @@
+---
+import promotions from "../data/promotions.yml";
+
+// Helper to map color names to Tailwind classes (safe list)
+const getColorClasses = (color: string) => {
+    const map: Record<string, any> = {
+        orange: {
+            bg: "bg-orange-100",
+            text: "text-orange-600",
+            circle: "bg-orange-200",
+            btn: "btn-warning",
+        },
+        yellow: {
+            bg: "bg-yellow-100",
+            text: "text-yellow-700",
+            circle: "bg-yellow-200",
+            btn: "btn-warning bg-yellow-400 border-none hover:bg-yellow-500",
+        },
+        red: {
+            bg: "bg-red-100",
+            text: "text-red-600",
+            circle: "bg-red-200",
+            btn: "btn-error text-white",
+        },
+    };
+    return map[color] || map.orange;
+};
+---
+
+<section class="container mx-auto px-4 py-8 animate-grid">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {
+            promotions.promotions.map((promo: any) => {
+                const colors = getColorClasses(promo.color);
+                return (
+                    <div
+                        class={`relative overflow-hidden rounded-2xl ${colors.bg} h-64 flex items-center p-6 group cursor-pointer hover:shadow-lg transition-shadow animate-item opacity-0`}
+                    >
+                        <div class="z-10 w-1/2">
+                            <span
+                                class={`${colors.text} font-bold text-sm uppercase tracking-wider mb-2 block`}
+                            >
+                                {promo.subtitle}
+                            </span>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 leading-tight">
+                                {promo.title}
+                            </h3>
+                            <a
+                                href={promo.link}
+                                class={`btn btn-sm rounded-full px-6 ${colors.btn}`}
+                            >
+                                {promo.buttonText} &rarr;
+                            </a>
+                        </div>
+                        <div class="absolute right-0 top-0 h-full w-1/2">
+                            <img
+                                src={promo.image}
+                                alt={promo.title}
+                                class="h-full w-full object-contain object-center group-hover:scale-110 transition-transform duration-500"
+                            />
+                        </div>
+                        {/* Decorative Circle */}
+                        <div
+                            class={`absolute -right-10 -bottom-10 w-40 h-40 ${colors.circle} rounded-full opacity-50 z-0`}
+                        />
+                    </div>
+                );
+            })
+        }
+    </div>
+</section>

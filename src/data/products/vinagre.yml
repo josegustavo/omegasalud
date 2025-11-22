@@ -1,0 +1,18 @@
+
+name: Vinagre de Manzana
+brand: Huerto Natural
+presentation: Botella 1L
+price: 18.00
+images:
+  - https://images.unsplash.com/photo-1565605655448-1b3a36721672?q=80&w=800&auto=format&fit=crop
+  - https://images.unsplash.com/photo-1603569283847-aa295f0d016a?q=80&w=800&auto=format&fit=crop
+description: Vinagre de manzana con la madre. Ayuda a la digestión y al control de peso. Elaborado con manzanas seleccionadas y fermentación natural.
+properties:
+  - Con la madre
+  - Fermentación natural
+  - Digestivo
+  - Sin filtrar
+categories:
+  - vinagres
+tags:
+  - Detox

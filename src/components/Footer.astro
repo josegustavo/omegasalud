@@ -1,0 +1,26 @@
+---
+const currentYear = new Date().getFullYear();
+import siteConfig from "../data/site.yml";
+---
+
+<footer
+    class="footer footer-center p-10 bg-base-200 text-base-content rounded mt-auto"
+>
+    <nav class="grid grid-flow-col gap-4">
+        <a href="/nosotros" class="link link-hover">Nosotros</a>
+        <a href="/terminos" class="link link-hover">Términos y Condiciones</a>
+        <a
+            href={`https://wa.me/${siteConfig.whatsapp.replace(/\+/g, "")}`}
+            class="link link-hover">Contacto</a
+        >
+    </nav>
+    <aside>
+        <p class="font-bold">
+            {siteConfig.name}
+            <br />
+            {siteConfig.tagline}
+        </p>
+        <p>Copyright © {currentYear} - Todos los derechos reservados</p>
+        <p>Huaycán, Ate, Lima - Perú</p>
+    </aside>
+</footer>
