@@ -1,10 +1,9 @@
 {
     "name": "omegasalud",
     "compatibility_date": "2025-11-22",
-    "main": "src/index.ts",
-    "assets": {
-        "directory": "./dist"
-    },
+    "name": "omegasalud",
+    "compatibility_date": "2025-11-22",
+    "pages_build_output_dir": "./dist",
     "observability": {
         "enabled": false,
         "head_sampling_rate": 1,
