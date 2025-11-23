@@ -12,7 +12,10 @@ export default defineConfig({
   output: 'server',
 
   vite: {
-    plugins: [tailwindcss(), yaml()]
+    plugins: [tailwindcss(), yaml()],
+    build: {
+      cssMinify: 'lightningcss'
+    }
   },
 
   integrations: [sitemap()],
