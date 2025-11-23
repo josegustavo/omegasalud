@@ -6,30 +6,13 @@ import ProductCard from "../../components/ProductCard.astro";
 import { products } from "../../data/products";
 import siteConfig from "../../data/site.yml";
 
-export async function getStaticPaths() {
-    // Generate paths for every category the product belongs to
-    return products.flatMap((product) => {
-        const productCategories = product.categories || [];
+const { category, slug } = Astro.params;
 
-        // If no categories, use 'producto' as fallback
-        if (productCategories.length === 0) {
-            return [
-                {
-                    params: { category: "producto", slug: product.id },
-                    props: { product },
-                },
-            ];
-        }
+const product = products.find((p) => p.id === slug);
 
-        return productCategories.map((category) => ({
-            params: { category: category, slug: product.id },
-            props: { product },
-        }));
-    });
+if (!product) {
+    return Astro.redirect("/404");
 }
-
-const { product } = Astro.props;
-const { category } = Astro.params;
 
 // Filter related products: same category, excluding current product
 const relatedProducts = products

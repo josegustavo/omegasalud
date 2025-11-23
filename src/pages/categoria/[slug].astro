@@ -5,14 +5,12 @@ import Footer from "../../components/Footer.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import { products, categories } from "../../data/products";
 
-export function getStaticPaths() {
-    return categories.map((cat) => ({
-        params: { slug: cat.id },
-        props: { category: cat },
-    }));
-}
+const { slug } = Astro.params;
+const category = categories.find((c) => c.id === slug);
 
-const { category } = Astro.props;
+if (!category) {
+    return Astro.redirect("/404");
+}
 const categoryProducts = products.filter(
     (p) => p.categories && p.categories.includes(category.id),
 );
