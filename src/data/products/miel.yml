@@ -1,20 +1,19 @@
-
 name: Miel de Abeja Orgánica
 brand: Apiario Real
 presentation: Frasco 500g
-price: 35.00
-originalPrice: 40.00
+price: 35
+originalPrice: 40
 images:
-  - https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=800&auto=format&fit=crop
-  - https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?q=80&w=800&auto=format&fit=crop
-description: Miel pura de abeja, sin aditivos ni conservantes. Cosechada de floraciones silvestres. Excelente para reforzar el sistema inmunológico.
-properties:
-  - 100% Pura
-  - Multifloral
-  - Energizante natural
-  - Sin azúcar añadida
+  - https://nutrimix.pe/wp-content/uploads/2022/12/8-nutrimix-edulcorantes-y-azucares-miel-de-abeja-pote-250ml.webp
 categories:
   - miel
 tags:
   - Orgánico
   - Superfood
+description: Miel pura de abeja, sin aditivos ni conservantes. Cosechada de
+  floraciones silvestres. Excelente para reforzar el sistema inmunológico.
+properties:
+  - 100% Pura
+  - Multifloral
+  - Energizante natural
+  - Sin azúcar añadida
