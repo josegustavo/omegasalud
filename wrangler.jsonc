@@ -1,7 +1,12 @@
 {
-    "name": "omegasalud",
-    "compatibility_date": "2025-11-22",
-    "assets": {
-        "directory": "./dist"
-    }
+	"name": "omegasalud",
+	"compatibility_date": "2025-11-22",
+	"pages_build_output_dir": "./dist",
+	"d1_databases": [
+		{
+			"binding": "STORE_DB",
+			"database_name": "omegasalud",
+			"database_id": "848dca4e-6765-47e1-bb60-88aef1a9adcd"
+		}
+	]
 }

@@ -8,7 +8,8 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://omegasalud.pe',
+  site: 'https://omegasalud.pages.dev',
+  output: 'server',
 
   vite: {
     plugins: [tailwindcss(), yaml()]
