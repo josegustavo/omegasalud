@@ -79,9 +79,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
         const orderCode = generateOrderCode();
         const orderId = crypto.randomUUID();
 
-        log(`[Order API] Creating order ${orderCode} (${orderId})`);
+        // Capture Metadata
+        const runtime = (locals as any).runtime;
+        const metadata = {
+            ip: request.headers.get("CF-Connecting-IP") || runtime?.ctx?.request?.headers?.get("CF-Connecting-IP") || "unknown",
+            userAgent: request.headers.get("User-Agent") || "unknown",
+            referer: request.headers.get("Referer") || "unknown"
+        };
+
+        log(`[Order API] Creating order ${orderCode} (${orderId}) with metadata: ${JSON.stringify(metadata)}`);
         const result = await db.prepare(
-            "INSERT INTO orders (id, order_code, customer_id, items, total, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO orders (id, order_code, customer_id, items, total, status, created_at, metadata) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         ).bind(
             orderId,
             orderCode,
@@ -89,7 +97,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
             JSON.stringify(items), // Store JSON as text
             total,
             "pending",
-            now
+            now,
+            JSON.stringify(metadata)
         ).run();
 
         log(`[Order API] Order creation result: ${JSON.stringify(result)}`);
@@ -110,7 +119,26 @@ export const POST: APIRoute = async ({ request, locals }) => {
         }
 
         const message = `Hola ${name}! 👋\n\nHemos recibido tu pedido *#${orderCode}* en Omega Salud.\n\nTotal: S/ ${total.toFixed(2)}\nItems:\n${items.map((i: any) => `- ${i.quantity}x ${i.name}`).join("\n")}\n\nPronto nos pondremos en contacto contigo para coordinar la entrega y el pago.`;
-        const formattedPhone = phone.replace(/\D/g, "");
+        // Sanitize and Validate Phone
+        let cleanPhone = phone.replace(/\D/g, "");
+        if (cleanPhone.startsWith("51") && cleanPhone.length === 11) {
+            cleanPhone = cleanPhone.substring(2);
+        }
+
+        if (!/^9\d{8}$/.test(cleanPhone)) {
+            log(`[Order API] Invalid phone number format: ${phone}`);
+            return new Response(JSON.stringify({
+                success: false,
+                code: 'INVALID_NUMBER',
+                error: "Número de celular inválido",
+                debugLogs
+            }), {
+                status: 400,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
+
+        const formattedPhone = `51${cleanPhone}`; // Always add 51 prefix for API
 
         try {
             log("[Order API] Attempting to send WhatsApp...");
@@ -122,19 +150,39 @@ export const POST: APIRoute = async ({ request, locals }) => {
                 },
                 body: JSON.stringify({
                     number: formattedPhone,
+                    text: message,
                     options: {
                         delay: 1200,
                         presence: "composing",
                         linkPreview: false
-                    },
-                    textMessage: {
-                        text: message
                     }
                 }),
             });
 
             if (!response.ok) {
                 log(`[ERROR] Evolution API returned ${response.status}`);
+
+                try {
+                    const errorData = await response.json() as any;
+                    log(`[Order API] Evolution API error response: ${JSON.stringify(errorData)}`);
+
+                    // Check for invalid number error structure
+                    // {"status":400,"error":"Bad Request","response":{"message":[{"jid":"...","exists":false,"number":"..."}]}}
+                    if (response.status === 400 && errorData?.response?.message?.[0]?.exists === false) {
+                        return new Response(JSON.stringify({
+                            success: false,
+                            orderId: orderCode,
+                            code: 'INVALID_NUMBER',
+                            debugLogs
+                        }), {
+                            status: 400,
+                            headers: { "Content-Type": "application/json" },
+                        });
+                    }
+                } catch (e) {
+                    log(`[ERROR] Failed to parse API error response`);
+                }
+
                 return new Response(JSON.stringify({
                     success: false,
                     orderId: orderCode,

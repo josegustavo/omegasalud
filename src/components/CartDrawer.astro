@@ -30,15 +30,19 @@ import siteConfig from "../data/site.yml";
                 <label class="label">
                     <span class="label-text">Celular</span>
                 </label>
-                <input
-                    type="tel"
-                    id="customer-phone"
-                    placeholder="999 999 999"
-                    class="input input-bordered w-full"
-                    required
-                    pattern="[0-9]{9}"
-                    maxlength="9"
-                />
+                <label class="input-group">
+                    <span>{siteConfig.phoneNumber?.prefix || "+51"}</span>
+                    <input
+                        type="tel"
+                        id="customer-phone"
+                        placeholder="999 999 999"
+                        class="input input-bordered w-full"
+                        required
+                        pattern="[9][0-9]{8}"
+                        maxlength="9"
+                        minlength="9"
+                    />
+                </label>
             </div>
 
             <div class="form-control">
@@ -50,6 +54,8 @@ import siteConfig from "../data/site.yml";
                     id="customer-name"
                     placeholder="Tu nombre"
                     class="input input-bordered w-full"
+                    maxlength="50"
+                    minlength="2"
                     required
                 />
             </div>
@@ -245,7 +251,19 @@ import siteConfig from "../data/site.yml";
                 (sum, item) => sum + item.price * item.quantity,
                 0,
             );
-            const phone = phoneInput.value;
+            let phone = phoneInput.value.replace(/\D/g, ""); // Remove non-digits
+
+            // If user typed 51 prefix (e.g. 519...), strip it
+            if (phone.startsWith("51") && phone.length === 11) {
+                phone = phone.substring(2);
+            }
+
+            // Validate Peru format: 9 digits, starts with 9
+            if (!/^9\d{8}$/.test(phone)) {
+                return alert(
+                    "Por favor ingresa un número de celular válido (9 dígitos comenzando con 9).",
+                );
+            }
             const name = nameInput.value;
 
             // Save to LocalStorage

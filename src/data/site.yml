@@ -22,6 +22,10 @@ address:
   postalCode: "15479"
   country: PE
 email: contacto@omegasalud.pe
+phoneNumber:
+  countryCode: "51"
+  prefix: "+51"
+  length: 9
 seo:
   defaultTitle: Omega Salud - Productos Naturales
   defaultDescription: Tienda de productos naturales y saludables en Huaycán.
