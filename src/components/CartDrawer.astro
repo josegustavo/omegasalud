@@ -17,7 +17,7 @@ import siteConfig from "../data/site.yml";
             <!-- Cart items will be inserted here -->
         </div>
 
-        <div class="mt-auto pt-4 border-t border-base-300">
+        <div class="mt-auto pt-4 border-t border-base-300 px-1">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-lg font-bold">Total:</span>
                 <span id="cart-total" class="text-2xl font-bold text-primary"
@@ -31,23 +31,21 @@ import siteConfig from "../data/site.yml";
                     <label class="label">
                         <span class="label-text">Celular</span>
                     </label>
-                    <div
-                        class="flex items-center border rounded-lg px-3 bg-base-100 border-base-300 focus-within:border-primary transition-colors"
-                    >
-                        <span class="text-base-content/70 mr-2 font-medium"
+                    <label class="input input-bordered flex items-center gap-2">
+                        <span class="text-base-content/70 font-medium"
                             >{siteConfig.phoneNumber?.prefix || "+51"}</span
                         >
                         <input
                             type="tel"
                             id="customer-phone"
                             placeholder="999 999 999"
-                            class="w-full bg-transparent focus:outline-none py-3"
+                            class="grow bg-transparent border-none focus:outline-none"
                             required
                             pattern="[9][0-9]{8}"
                             maxlength="9"
                             minlength="9"
                         />
-                    </div>
+                    </label>
                 </div>
 
                 <div class="form-control">
@@ -133,7 +131,7 @@ import siteConfig from "../data/site.yml";
                     <div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="stroke-current flex-shrink-0 h-6 w-6"
+                            class="stroke-current shrink-0 h-6 w-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             ><path
