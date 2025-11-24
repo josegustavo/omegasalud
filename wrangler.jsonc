@@ -8,5 +8,9 @@
 			"database_name": "omegasalud",
 			"database_id": "848dca4e-6765-47e1-bb60-88aef1a9adcd"
 		}
-	]
+	],
+	"vars": {
+		"EVOLUTION_API_URL": "https://evolution.matdiama.org",
+		"EVOLUTION_INSTANCE_NAME": "JG"
+	}
 }
