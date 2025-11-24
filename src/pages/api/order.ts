@@ -34,7 +34,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         const db = env.STORE_DB;
 
         // 0. Rate Limiting (Spam Protection)
-        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+        const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000).toISOString();
 
         // Get customer ID first
         log(`[Order API] Checking customer for phone: ${phone}`);
@@ -47,7 +47,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         if (existingCustomer) {
             const recentOrder = await db.prepare(
                 "SELECT id FROM orders WHERE customer_id = ? AND created_at > ?"
-            ).bind(existingCustomer.id, fiveMinutesAgo).first();
+            ).bind(existingCustomer.id, oneMinuteAgo).first();
 
             if (recentOrder) {
                 log("[Order API] Rate limit hit");
