@@ -96,41 +96,80 @@ export const POST: APIRoute = async ({ request, locals }) => {
         log("[Order API] Order created successfully");
 
         // 3. Send WhatsApp via Evolution API
-        if (env.EVOLUTION_API_URL && env.EVOLUTION_API_TOKEN) {
-            const message = `Hola ${name}! 👋\n\nHemos recibido tu pedido *#${orderCode}* en Omega Salud.\n\nTotal: S/ ${total.toFixed(2)}\nItems:\n${items.map((i: any) => `- ${i.quantity}x ${i.name}`).join("\n")}\n\nPronto nos pondremos en contacto contigo para coordinar la entrega y el pago.`;
-
-            const formattedPhone = phone.replace(/\D/g, "");
-
-            try {
-                log("[Order API] Attempting to send WhatsApp...");
-                await fetch(`${env.EVOLUTION_API_URL}/message/sendText/${env.SENDER_PHONE_NUMBER}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "apikey": env.EVOLUTION_API_TOKEN,
-                    },
-                    body: JSON.stringify({
-                        number: formattedPhone,
-                        options: {
-                            delay: 1200,
-                            presence: "composing",
-                            linkPreview: false
-                        },
-                        textMessage: {
-                            text: message
-                        }
-                    }),
-                });
-                log("[Order API] WhatsApp message sent successfully.");
-            } catch (e: any) {
-                log(`[ERROR] Failed to send WhatsApp: ${e.message}`);
-            }
+        if (!env.EVOLUTION_API_URL || !env.EVOLUTION_API_TOKEN || !env.EVOLUTION_INSTANCE_NAME) {
+            log("[Order API] Evolution API not configured");
+            return new Response(JSON.stringify({
+                success: false,
+                orderId: orderCode,
+                code: 'SERVICE_ERROR',
+                debugLogs
+            }), {
+                status: 500,
+                headers: { "Content-Type": "application/json" },
+            });
         }
 
-        return new Response(JSON.stringify({ success: true, orderId: orderCode, debugLogs }), {
-            headers: { "Content-Type": "application/json" },
-        });
+        const message = `Hola ${name}! 👋\n\nHemos recibido tu pedido *#${orderCode}* en Omega Salud.\n\nTotal: S/ ${total.toFixed(2)}\nItems:\n${items.map((i: any) => `- ${i.quantity}x ${i.name}`).join("\n")}\n\nPronto nos pondremos en contacto contigo para coordinar la entrega y el pago.`;
+        const formattedPhone = phone.replace(/\D/g, "");
 
+        try {
+            log("[Order API] Attempting to send WhatsApp...");
+            const response = await fetch(`${env.EVOLUTION_API_URL}/message/sendText/${env.EVOLUTION_INSTANCE_NAME}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": env.EVOLUTION_API_TOKEN,
+                },
+                body: JSON.stringify({
+                    number: formattedPhone,
+                    options: {
+                        delay: 1200,
+                        presence: "composing",
+                        linkPreview: false
+                    },
+                    textMessage: {
+                        text: message
+                    }
+                }),
+            });
+
+            if (!response.ok) {
+                log(`[ERROR] Evolution API returned ${response.status}`);
+                return new Response(JSON.stringify({
+                    success: false,
+                    orderId: orderCode,
+                    code: 'SERVICE_ERROR',
+                    debugLogs
+                }), {
+                    status: 500,
+                    headers: { "Content-Type": "application/json" },
+                });
+            }
+
+            const data = await response.json() as any;
+            log(`[Order API] Evolution API response: ${JSON.stringify(data)}`);
+
+            // Check for specific API errors if possible (Evolution API structure varies)
+            // Assuming success if we got here for now, unless response body indicates error
+
+            log("[Order API] WhatsApp message sent successfully.");
+
+            return new Response(JSON.stringify({ success: true, orderId: orderCode, debugLogs }), {
+                headers: { "Content-Type": "application/json" },
+            });
+
+        } catch (e: any) {
+            log(`[ERROR] Failed to send WhatsApp: ${e.message}`);
+            return new Response(JSON.stringify({
+                success: false,
+                orderId: orderCode,
+                code: 'SERVICE_ERROR',
+                debugLogs
+            }), {
+                status: 500,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
     } catch (err: any) {
         log(`[ERROR] Exception: ${err.message}`);
         return new Response(JSON.stringify({ error: err.message, debugLogs }), {
