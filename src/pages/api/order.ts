@@ -35,8 +35,31 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         // 0. Rate Limiting (Spam Protection)
         const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000).toISOString();
+        const runtime = (locals as any).runtime;
+        const clientIp = request.headers.get("CF-Connecting-IP") || runtime?.ctx?.request?.headers?.get("CF-Connecting-IP") || "unknown";
 
-        // Get customer ID first
+        log(`[Order API] Checking rate limit for IP: ${clientIp}`);
+
+        // IP-based Rate Limit (Max 2 per minute to allow for corrections)
+        if (clientIp !== "unknown") {
+            const recentOrdersByIp = await db.prepare(
+                "SELECT count(*) as count FROM orders WHERE json_extract(metadata, '$.ip') = ? AND created_at > ?"
+            ).bind(clientIp, oneMinuteAgo).first<{ count: number }>();
+
+            if (recentOrdersByIp && recentOrdersByIp.count >= 2) {
+                log(`[Order API] IP rate limit hit (${recentOrdersByIp.count} orders in last minute)`);
+                return new Response(JSON.stringify({
+                    error: "Has excedido el límite de intentos. Por favor espera un minuto.",
+                    code: "RATE_LIMIT_EXCEEDED",
+                    debugLogs
+                }), {
+                    status: 429,
+                    headers: { "Content-Type": "application/json" },
+                });
+            }
+        }
+
+        // Phone-based Rate Limit (Strict 1 per minute for same number)
         log(`[Order API] Checking customer for phone: ${phone}`);
         const existingCustomer = await db.prepare(
             "SELECT id FROM customers WHERE phone = ?"
@@ -50,8 +73,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
             ).bind(existingCustomer.id, oneMinuteAgo).first();
 
             if (recentOrder) {
-                log("[Order API] Rate limit hit");
-                return new Response(JSON.stringify({ error: "Por favor espera unos minutos antes de realizar otro pedido.", debugLogs }), {
+                log("[Order API] Phone rate limit hit");
+                return new Response(JSON.stringify({
+                    error: "Ya existe un pedido reciente con este número. Por favor espera unos minutos.",
+                    code: "RATE_LIMIT_EXCEEDED",
+                    debugLogs
+                }), {
                     status: 429,
                     headers: { "Content-Type": "application/json" },
                 });
@@ -80,9 +107,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
         const orderId = crypto.randomUUID();
 
         // Capture Metadata
-        const runtime = (locals as any).runtime;
+        // runtime is already defined above
         const metadata = {
-            ip: request.headers.get("CF-Connecting-IP") || runtime?.ctx?.request?.headers?.get("CF-Connecting-IP") || "unknown",
+            ip: clientIp, // Reuse clientIp captured above
             userAgent: request.headers.get("User-Agent") || "unknown",
             referer: request.headers.get("Referer") || "unknown"
         };

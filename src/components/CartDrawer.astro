@@ -79,6 +79,44 @@ import siteConfig from "../data/site.yml";
             </button>
         </form>
 
+        <!-- Step 2: Confirmation (Success) -->
+        <div id="confirmation-step" class="hidden space-y-4 text-center">
+            <div class="alert alert-success shadow-lg">
+                <div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="stroke-current flex-shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path></svg
+                    >
+                    <span>¡Pedido registrado!</span>
+                </div>
+            </div>
+            <p class="text-sm">
+                Hemos enviado un mensaje de confirmación a <strong
+                    id="confirm-phone-display"></strong>
+            </p>
+            <p class="font-bold">¿Te llegó el mensaje a WhatsApp?</p>
+
+            <div class="grid grid-cols-1 gap-2">
+                <button
+                    id="confirm-received-btn"
+                    class="btn btn-success text-white"
+                >
+                    Sí, recibí el mensaje
+                </button>
+                <button id="retry-phone-btn" class="btn btn-outline btn-sm">
+                    No, corregir número
+                </button>
+            </div>
+        </div>
+
         <!-- Step 3: Fallback (Service Error) -->
         <div
             id="fallback-step"
@@ -337,14 +375,16 @@ import siteConfig from "../data/site.yml";
 
     // Confirm Received
     confirmReceivedBtn?.addEventListener("click", () => {
-        cartItems.set([]); // Clear cart
-        // Close drawer (simulated by unchecking the checkbox)
+        cartItems.set([]); // Clear cart ONLY here
+        localStorage.removeItem("customerPhone"); // Optional: clear phone if desired, or keep for next time
+
+        // Close drawer
         const drawerCheckbox = document.getElementById(
             "cart-drawer",
         ) as HTMLInputElement;
         if (drawerCheckbox) drawerCheckbox.checked = false;
 
-        // Reset UI
+        // Reset UI after a delay
         setTimeout(() => {
             checkoutForm?.classList.remove("hidden");
             confirmationStep?.classList.add("hidden");
@@ -356,8 +396,9 @@ import siteConfig from "../data/site.yml";
         }, 500);
     });
 
-    // Retry Phone
+    // Retry Phone (Correct Number)
     retryPhoneBtn?.addEventListener("click", () => {
+        // Do NOT clear cart
         checkoutForm?.classList.remove("hidden");
         confirmationStep?.classList.add("hidden");
         fallbackStep?.classList.add("hidden");
