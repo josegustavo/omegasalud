@@ -220,7 +220,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
         }
     } catch (err: any) {
         log(`[ERROR] Exception: ${err.message}`);
-        return new Response(JSON.stringify({ error: err.message, debugLogs }), {
+        // Return generic error to client, but log specific error internally
+        return new Response(JSON.stringify({
+            error: "Ocurrió un error interno al procesar tu pedido. Por favor intenta nuevamente.",
+            code: "INTERNAL_ERROR",
+            // Only include debugLogs in development or if specifically needed, 
+            // but for now we'll keep them as the user seems to rely on them for debugging,
+            // just ensuring the main 'error' field is sanitized.
+            debugLogs
+        }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });
