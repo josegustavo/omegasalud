@@ -1,21 +1,21 @@
 slides:
   - title: Naturalmente Saludable
-    description: Descubre nuestra selección de productos naturales para tu bienestar. Aceites, stevia, miel y más, directo a tu hogar en Huaycán.
+    description: Descubre nuestra selección de productos naturales para tu
+      bienestar. Aceites, stevia, miel y más, directo a tu hogar en Huaycán.
     buttonText: Ver Productos
     link: "#products"
-    bgClass: "bg-linear-to-br from-primary/10 via-base-100 to-secondary/10"
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800&auto=format&fit=crop"
-
+    bgClass: bg-linear-to-br from-primary/10 via-base-100 to-secondary/10
+    image: /images/uploads/banner.png
   - title: Ofertas de Temporada
-    description: Aprovecha nuestros descuentos especiales en aceites y vinagres. ¡Solo por tiempo limitado!
+    description: Aprovecha nuestros descuentos especiales en aceites y vinagres.
+      ¡Solo por tiempo limitado!
     buttonText: Ver Ofertas
-    link: "/categoria/aceites"
-    bgClass: "bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100"
-    image: "https://images.unsplash.com/photo-1615485290386-eca287343e3e?q=80&w=800&auto=format&fit=crop"
-
+    link: /categoria/aceites
+    bgClass: bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100
+    image: https://images.unsplash.com/photo-1615485290386-eca287343e3e?q=80&w=800&auto=format&fit=crop
   - title: "Nuevo: Pack Desayuno"
     description: Empieza tu día con energía. Miel orgánica, café y granola artesanal.
     buttonText: Comprar Pack
-    link: "/product/4"
-    bgClass: "bg-linear-to-br from-green-100 via-emerald-50 to-teal-100"
-    image: "https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=800&auto=format&fit=crop"
+    link: /product/4
+    bgClass: bg-linear-to-br from-green-100 via-emerald-50 to-teal-100
+    image: https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=800&auto=format&fit=crop
