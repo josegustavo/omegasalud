@@ -1,5 +1,7 @@
 ---
-import heroSlides from "../data/hero.yml";
+// Importar todos los archivos YAML de la carpeta hero
+const heroFiles = import.meta.glob('../data/hero/*.yml', { eager: true });
+const heroSlides = Object.values(heroFiles).map((file: any) => file.default || file);
 ---
 
 <div class="relative group w-full">
@@ -9,7 +11,7 @@ import heroSlides from "../data/hero.yml";
         id="hero-slider"
     >
         {
-            heroSlides.slides.map((slide: any, index: number) => (
+            heroSlides.map((slide: any, index: number) => (
                 <div
                     id={`slide${index}`}
                     class="carousel-item relative w-full h-full snap-center"
@@ -50,7 +52,7 @@ import heroSlides from "../data/hero.yml";
         class="absolute flex justify-center gap-3 bottom-6 left-0 right-0 z-20"
     >
         {
-            heroSlides.slides.map((_: any, index: number) => (
+            heroSlides.map((_: any, index: number) => (
                 <button
                     class="w-3 h-3 rounded-full transition-all duration-300 bg-white/50 hover:bg-white hover:scale-125 focus:outline-none"
                     aria-label={`Go to slide ${index + 1}`}

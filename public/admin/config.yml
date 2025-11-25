@@ -80,39 +80,33 @@ collections:
 
   - name: "hero"
     label: "Hero (Slider)"
-    files:
-      - name: "hero_slides"
-        label: "Slides del Hero"
-        file: "src/data/hero.yml"
-        fields:
-          - label: "Slides"
-            name: "slides"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Descripción", name: "description", widget: "text"}
-              - {label: "Texto Botón", name: "buttonText", widget: "string"}
-              - {label: "Enlace", name: "link", widget: "string"}
-              - {label: "Imagen", name: "image", widget: "image"}
-              - {label: "Fondo", name: "bgClass", widget: "select", options: ["bg-linear-to-br from-primary/10 via-base-100 to-secondary/10", "bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100", "bg-linear-to-br from-green-100 via-emerald-50 to-teal-100", "bg-linear-to-br from-blue-100 via-cyan-50 to-sky-100"]}
+    folder: "src/data/hero"
+    create: true
+    slug: "{{slug}}"
+    extension: "yml"
+    format: "yaml"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Texto Botón", name: "buttonText", widget: "string"}
+      - {label: "Enlace", name: "link", widget: "string"}
+      - {label: "Imagen", name: "image", widget: "image"}
+      - {label: "Fondo", name: "bgClass", widget: "select", options: ["bg-linear-to-br from-primary/10 via-base-100 to-secondary/10", "bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100", "bg-linear-to-br from-green-100 via-emerald-50 to-teal-100", "bg-linear-to-br from-blue-100 via-cyan-50 to-sky-100"]}
 
   - name: "promotions"
     label: "Promociones"
-    files:
-      - name: "promotions_list"
-        label: "Lista de Promociones"
-        file: "src/data/promotions.yml"
-        fields:
-          - label: "Promociones"
-            name: "promotions"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Subtítulo", name: "subtitle", widget: "string"}
-              - {label: "Texto Botón", name: "buttonText", widget: "string"}
-              - {label: "Enlace", name: "link", widget: "string"}
-              - {label: "Imagen", name: "image", widget: "image"}
-              - {label: "Color", name: "color", widget: "select", options: ["orange", "yellow", "red"]}
+    folder: "src/data/promotions"
+    create: true
+    slug: "{{slug}}"
+    extension: "yml"
+    format: "yaml"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Subtítulo", name: "subtitle", widget: "string"}
+      - {label: "Texto Botón", name: "buttonText", widget: "string"}
+      - {label: "Enlace", name: "link", widget: "string"}
+      - {label: "Imagen", name: "image", widget: "image"}
+      - {label: "Color", name: "color", widget: "select", options: ["orange", "yellow", "red"]}
 
   - name: "categories"
     label: "Categorías"

@@ -51,11 +51,11 @@ const getTagStyle = (tag: string) => {
 <div
     class="card bg-base-100 border-[3px] border-base-200 hover:border-primary/50 transition-all duration-300 group h-full flex flex-col rounded-2xl overflow-hidden relative"
 >
-    <!-- Badges Container - Left Side -->
-    <div class="absolute top-4 left-0 z-10 flex flex-col gap-2 items-start">
-        {
-            discount > 0 && (
-                <div class="bg-linear-to-r from-red-500 to-rose-600 text-white font-bold text-sm py-1 px-3 rounded-r-xl shadow-md flex items-center gap-1">
+    <!-- Discount Badge - Top Right -->
+    {
+        discount > 0 && (
+            <div class="absolute top-4 right-0 z-10">
+                <div class="bg-linear-to-r from-red-500 to-rose-600 text-white font-bold text-sm py-1 px-3 rounded-l-xl shadow-md flex items-center gap-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4"
@@ -72,32 +72,9 @@ const getTagStyle = (tag: string) => {
                     </svg>
                     -{discount}%
                 </div>
-            )
-        }
-        {
-            tags.map((tag) => (
-                <div
-                    class={`bg-linear-to-r ${getTagStyle(tag)} text-white font-bold text-xs py-1 px-3 rounded-r-xl shadow-md flex items-center gap-1`}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-3 w-3"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 13l4 4L19 7"
-                        />
-                    </svg>
-                    {tag.toUpperCase()}
-                </div>
-            ))
-        }
-    </div>
+            </div>
+        )
+    }
 
     <a href={productUrl} class="block relative pt-8 px-6 pb-2">
         <img
@@ -105,6 +82,33 @@ const getTagStyle = (tag: string) => {
             alt={name}
             class="h-52 w-full object-contain group-hover:scale-105 transition-transform duration-500"
         />
+        
+        <!-- Tags - Bottom Left of Image -->
+        {tags.length > 0 && (
+            <div class="absolute bottom-2 left-0 flex flex-col gap-1.5 items-start">
+                {tags.map((tag) => (
+                    <div
+                        class={`bg-linear-to-r ${getTagStyle(tag)} text-white font-bold text-xs py-1 px-3 rounded-r-xl shadow-md flex items-center gap-1`}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-3 w-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                        {tag.toUpperCase()}
+                    </div>
+                ))}
+            </div>
+        )}
     </a>
 
     <div class="card-body p-5 flex-1 flex flex-col">

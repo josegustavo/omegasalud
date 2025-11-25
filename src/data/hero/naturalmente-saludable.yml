@@ -1,0 +1,6 @@
+title: Naturalmente Saludable
+description: Descubre nuestra selección de productos naturales para tu bienestar. Aceites, stevia, miel y más, directo a tu hogar en Huaycán.
+buttonText: Ver Productos
+link: "#products"
+bgClass: bg-linear-to-br from-primary/10 via-base-100 to-secondary/10
+image: /images/uploads/banner-1.png

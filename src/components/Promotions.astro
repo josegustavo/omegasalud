@@ -1,71 +1,111 @@
 ---
-import promotions from "../data/promotions.yml";
+// Importar todos los archivos YAML de la carpeta promotions
+const promotionFiles = import.meta.glob('../data/promotions/*.yml', { eager: true });
+const promotions = Object.values(promotionFiles).map((file: any) => file.default || file);
 
-// Helper to map color names to Tailwind classes (safe list)
+// Colores suaves y naturales para productos saludables
 const getColorClasses = (color: string) => {
     const map: Record<string, any> = {
         orange: {
-            bg: "bg-orange-100",
+            bg: "bg-orange-50",
             text: "text-orange-600",
-            circle: "bg-orange-200",
-            btn: "btn-warning",
+            btn: "bg-orange-500 hover:bg-orange-600 text-white",
+            circle: "bg-orange-100",
         },
         yellow: {
-            bg: "bg-yellow-100",
-            text: "text-yellow-700",
-            circle: "bg-yellow-200",
-            btn: "btn-warning bg-yellow-400 border-none hover:bg-yellow-500",
+            bg: "bg-amber-50",
+            text: "text-amber-600",
+            btn: "bg-amber-500 hover:bg-amber-600 text-white",
+            circle: "bg-amber-100",
         },
         red: {
-            bg: "bg-red-100",
-            text: "text-red-600",
-            circle: "bg-red-200",
-            btn: "btn-error text-white",
+            bg: "bg-rose-50",
+            text: "text-rose-600",
+            btn: "bg-rose-500 hover:bg-rose-600 text-white",
+            circle: "bg-rose-100",
+        },
+        green: {
+            bg: "bg-emerald-50",
+            text: "text-emerald-600",
+            btn: "bg-emerald-500 hover:bg-emerald-600 text-white",
+            circle: "bg-emerald-100",
+        },
+        blue: {
+            bg: "bg-sky-50",
+            text: "text-sky-600",
+            btn: "bg-sky-500 hover:bg-sky-600 text-white",
+            circle: "bg-sky-100",
         },
     };
     return map[color] || map.orange;
 };
 ---
 
-<section class="container mx-auto px-4 py-8 animate-grid">
+<section class="container mx-auto px-4 py-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {
-            promotions.promotions.map((promo: any) => {
+            promotions.map((promo: any, index: number) => {
                 const colors = getColorClasses(promo.color);
                 return (
-                    <div
-                        class={`relative overflow-hidden rounded-2xl ${colors.bg} h-64 flex items-center p-6 group cursor-pointer hover:shadow-lg transition-shadow animate-item opacity-0`}
+                    <a 
+                        href={promo.link}
+                        class={`group relative overflow-hidden rounded-2xl ${colors.bg} h-64 flex cursor-pointer hover:shadow-lg transition-all duration-300`}
+                        style={`animation: fadeInUp 0.5s ease-out ${index * 0.1}s both;`}
                     >
-                        <div class="z-10 w-1/2">
-                            <span
-                                class={`${colors.text} font-bold text-sm uppercase tracking-wider mb-2 block`}
-                            >
+                        {/* Content - left side */}
+                        <div class="relative z-10 w-3/5 p-5 md:p-6 flex flex-col justify-between h-full">
+                            {/* Badge */}
+                            <span class={`${colors.text} font-bold text-xs uppercase tracking-wider`}>
                                 {promo.subtitle}
                             </span>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 leading-tight">
+                            
+                            {/* Title */}
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800 leading-tight">
                                 {promo.title}
                             </h3>
-                            <a
-                                href={promo.link}
-                                class={`btn btn-sm rounded-full px-6 ${colors.btn}`}
-                            >
-                                {promo.buttonText} &rarr;
-                            </a>
+                            
+                            {/* Button */}
+                            <span class={`inline-flex items-center gap-2 self-start whitespace-nowrap px-4 py-2 ${colors.btn} font-medium text-sm rounded-full shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:gap-3`}>
+                                {promo.buttonText}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </span>
                         </div>
-                        <div class="absolute right-0 top-0 h-full w-1/2">
+
+                        {/* Image - right side */}
+                        <div class="absolute right-0 top-0 w-2/5 h-full flex items-center justify-center">
                             <img
                                 src={promo.image}
                                 alt={promo.title}
-                                class="h-full w-full object-contain object-center group-hover:scale-110 transition-transform duration-500"
+                                class="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-110"
+                                loading="lazy"
                             />
                         </div>
+
                         {/* Decorative Circle */}
-                        <div
-                            class={`absolute -right-10 -bottom-10 w-40 h-40 ${colors.circle} rounded-full opacity-50 z-0`}
-                        />
-                    </div>
+                        <div class={`absolute -right-10 -bottom-10 w-40 h-40 ${colors.circle} rounded-full opacity-60`}></div>
+
+                        {/* Shine effect on hover */}
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                            <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        </div>
+                    </a>
                 );
             })
         }
     </div>
 </section>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
