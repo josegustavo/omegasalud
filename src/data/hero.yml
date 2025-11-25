@@ -5,14 +5,14 @@ slides:
     buttonText: Ver Productos
     link: "#products"
     bgClass: bg-linear-to-br from-primary/10 via-base-100 to-secondary/10
-    image: /images/uploads/banner.png
+    image: /images/uploads/banner-1.png
   - title: Ofertas de Temporada
     description: Aprovecha nuestros descuentos especiales en aceites y vinagres.
       ¡Solo por tiempo limitado!
     buttonText: Ver Ofertas
     link: /categoria/aceites
     bgClass: bg-linear-to-br from-orange-100 via-amber-50 to-yellow-100
-    image: https://images.unsplash.com/photo-1615485290386-eca287343e3e?q=80&w=800&auto=format&fit=crop
+    image: /images/uploads/banner-2.png
   - title: "Nuevo: Pack Desayuno"
     description: Empieza tu día con energía. Miel orgánica, café y granola artesanal.
     buttonText: Comprar Pack
