@@ -1,6 +1,6 @@
 title: "Solo esta semana"
 subtitle: "Oferta Especial"
-buttonText: "Comprar Ahora"
+buttonText: "Ver Ofertas"
 link: "/categoria/aceites"
-image: "https://images.unsplash.com/photo-1474979266404-7cadd259d366?q=80&w=400&auto=format&fit=crop"
+image: "/images/uploads/promo-ofertas.png"
 color: "orange"
