@@ -1,11 +1,33 @@
 ---
-import { Image } from 'astro:assets';
+// Prerender para optimizar imágenes en build time
+export const prerender = true;
+
+import OptimizedImage from '../../components/OptimizedImage.astro';
 import Layout from "../../layouts/Layout.astro";
-import Navbar from "../../components/Navbar.astro";;
+import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import ProductCard from "../../components/ProductCard.astro";
-import { products } from "../../data/products";
+import { products, categories } from "../../data/products";
 import siteConfig from "../../data/site.yml";
+
+// Generar rutas estáticas para todos los productos (una ruta por cada combinación producto-categoría)
+export function getStaticPaths() {
+    const paths: { params: { category: string; slug: string } }[] = [];
+    
+    products.forEach(product => {
+        // Un producto puede estar en múltiples categorías
+        product.categories.forEach(cat => {
+            paths.push({
+                params: { 
+                    category: cat, 
+                    slug: product.id 
+                }
+            });
+        });
+    });
+    
+    return paths;
+}
 
 const { category, slug } = Astro.params;
 
@@ -71,7 +93,7 @@ const jsonLd = {
                 <div
                     class="rounded-2xl overflow-hidden shadow-lg border border-base-200 bg-base-100"
                 >
-                    <Image
+                    <OptimizedImage
                         src={product.images[0]}
                         alt={product.name}
                         width={600}
@@ -87,7 +109,7 @@ const jsonLd = {
                                 class="w-20 h-20 rounded-lg border-2 border-transparent hover:border-primary overflow-hidden transition-all thumbnail"
                                 data-src={img}
                             >
-                                <Image
+                                <OptimizedImage
                                     src={img}
                                     alt={`${product.name} ${index + 1}`}
                                     width={80}

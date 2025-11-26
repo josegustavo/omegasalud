@@ -3,12 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "sync-images": "node scripts/sync-images.mjs",
+    "dev": "npm run sync-images && astro dev",
+    "build": "npm run sync-images && astro build",
     "preview": "astro preview",
     "admin": "npx decap-server",
     "astro": "astro",
-    "local": "npx wrangler pages dev -- npm run dev"
+    "local": "npm run sync-images && npx wrangler pages dev -- npm run dev"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.11",

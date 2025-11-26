@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import OptimizedImage from './OptimizedImage.astro';
 
 // Importar todos los archivos YAML de la carpeta hero
 const heroFiles = import.meta.glob('../data/hero/*.yml', { eager: true });
@@ -21,7 +21,7 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
                 >
                     <a href={slide.link} class="block w-full h-full relative group/slide overflow-hidden">
                         <!-- Background Image -->
-                        <Image
+                        <OptimizedImage
                             src={slide.image}
                             alt={slide.title}
                             width={1920}

@@ -19,5 +19,10 @@ export default defineConfig({
   },
 
   integrations: [sitemap()],
-  adapter: cloudflare()
+  
+  adapter: cloudflare({
+    // Usar 'compile' para optimizar imágenes durante el build con Sharp
+    // Las imágenes se convierten a WebP en tiempo de build
+    imageService: 'compile'
+  })
 });

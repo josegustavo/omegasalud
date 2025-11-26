@@ -1,0 +1,73 @@
+---
+/**
+ * Componente OptimizedImage - Wrapper para imágenes optimizadas de Astro
+ * Soporta tanto imágenes de src/assets como de public/
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  [key: string]: any;
+}
+
+const { src, alt, width, height, class: className, loading = 'lazy', ...rest } = Astro.props;
+
+// Importar todas las imágenes de src/assets/uploads
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/uploads/*.{png,jpg,jpeg,gif,webp,avif,svg}',
+  { eager: true }
+);
+
+// Función para obtener la imagen optimizada
+function getOptimizedImage(imagePath: string): ImageMetadata | string {
+  // Si es una URL completa, retornarla tal cual
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  
+  // Si es una ruta de /images/uploads/, buscar en assets
+  if (imagePath.startsWith('/images/uploads/')) {
+    const filename = imagePath.replace('/images/uploads/', '');
+    const assetPath = `/src/assets/uploads/${filename}`;
+    
+    if (images[assetPath]) {
+      return images[assetPath].default;
+    }
+  }
+  
+  // Fallback: retornar la ruta original (usará public/)
+  return imagePath;
+}
+
+const optimizedSrc = getOptimizedImage(src);
+const isOptimized = typeof optimizedSrc !== 'string';
+---
+
+{isOptimized ? (
+  <Image
+    src={optimizedSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    loading={loading}
+    format="webp"
+    quality={80}
+    {...rest}
+  />
+) : (
+  <img
+    src={optimizedSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    loading={loading}
+    {...rest}
+  />
+)}

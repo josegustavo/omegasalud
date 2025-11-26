@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import OptimizedImage from './OptimizedImage.astro';
 
 // Importar todos los archivos YAML de la carpeta promotions
 const promotionFiles = import.meta.glob('../data/promotions/*.yml', { eager: true });
@@ -77,7 +77,7 @@ const getColorClasses = (color: string) => {
 
                         {/* Image - right side */}
                         <div class="absolute right-0 top-0 w-2/5 h-full flex items-center justify-center">
-                            <Image
+                            <OptimizedImage
                                 src={promo.image}
                                 alt={promo.title}
                                 width={300}

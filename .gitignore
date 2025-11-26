@@ -4,6 +4,9 @@ dist/
 # generated types
 .astro/
 
+# optimized images (generated from public/images/uploads)
+src/assets/uploads/
+
 # dependencies
 node_modules/
 

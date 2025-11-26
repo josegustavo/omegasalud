@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import OptimizedImage from './OptimizedImage.astro';
 
 interface Props {
     id: string;
@@ -79,7 +79,7 @@ const getTagStyle = (tag: string) => {
     }
 
     <a href={productUrl} class="block relative pt-8 px-6 pb-2">
-        <Image
+        <OptimizedImage
             src={image}
             alt={name}
             width={400}
