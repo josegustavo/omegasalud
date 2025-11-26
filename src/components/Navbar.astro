@@ -1,6 +1,8 @@
 ---
 import { categories } from "../data/products";
 import siteConfig from "../data/site.yml";
+import Logo from "./Logo.astro";
+
 interface Props {
     isTransparent?: boolean;
 }
@@ -10,288 +12,308 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
 ---
 
 <!-- Top Banner - Envío Gratis (se oculta al scroll) -->
-<div id="promo-banner" class="bg-linear-to-r from-emerald-600 via-green-500 to-teal-500 text-white py-2 px-4 text-center relative z-50 overflow-hidden transition-all duration-300">
-    <div class="relative flex items-center justify-center gap-3 md:gap-6 flex-wrap">
-        <!-- Envío Gratis -->
-        <span class="inline-flex items-center gap-1.5 text-sm md:text-base font-semibold">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-            </svg>
-            <strong>Envío GRATIS</strong>
-            <span class="hidden sm:inline text-white/80">Huaycán y alrededores</span>
-        </span>
-        
-        <!-- Separador -->
-        <span class="hidden md:block w-px h-4 bg-white/30"></span>
-        
-        <!-- Pago Contra Entrega -->
-        <span class="inline-flex items-center gap-1.5 text-sm md:text-base font-semibold">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-            <strong>Paga al recibir</strong>
-            <span class="hidden lg:inline text-white/80">• Sin adelantos</span>
-        </span>
-    </div>
+<div
+  id="promo-banner"
+  class="bg-linear-to-r from-emerald-600 via-green-500 to-teal-500 text-white py-2 px-4 text-center relative z-50 overflow-hidden transition-all duration-300"
+>
+  <div
+    class="relative flex items-center justify-center gap-3 md:gap-6 flex-wrap"
+  >
+    <!-- Envío Gratis -->
+    <span
+      class="inline-flex items-center gap-1.5 text-sm md:text-base font-semibold"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"
+        ></path>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"
+        ></path>
+      </svg>
+      <strong>Envío GRATIS</strong>
+      <span class="hidden sm:inline text-white/80">Huaycán y alrededores</span>
+    </span>
+
+    <!-- Separador -->
+    <span class="hidden md:block w-px h-4 bg-white/30"></span>
+
+    <!-- Pago Contra Entrega -->
+    <span
+      class="inline-flex items-center gap-1.5 text-sm md:text-base font-semibold"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+        ></path>
+      </svg>
+      <strong>Paga al recibir</strong>
+      <span class="hidden lg:inline text-white/80">• Sin adelantos</span>
+    </span>
+  </div>
 </div>
 
 <!-- Navbar -->
 <div
-    id="main-navbar"
-    class:list={[
-        "navbar z-40 font-outfit transition-all duration-300",
-        isTransparent
-            ? "sticky top-0 text-white bg-black/20 backdrop-blur-md border-b border-white/10"
-            : "sticky top-0 text-base-content bg-base-100 shadow-sm",
-    ]}
+  id="main-navbar"
+  class:list={[
+    "navbar z-40 font-outfit transition-all duration-300",
+    isTransparent
+      ? "sticky top-0 text-white bg-black/30 backdrop-blur-md border-b border-white/10"
+      : "sticky top-0 text-base-content bg-base-100 shadow-sm",
+  ]}
 >
-    <div class="navbar-start">
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h8m-8 6h16"></path></svg
-                >
-            </div>
-            <ul
-                tabindex="0"
-                class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow-xl bg-base-100 rounded-box w-80 text-base-content"
-            >
-                <li><a href="/" class="font-semibold">🏠 Inicio</a></li>
-                <li>
-                    <details open>
-                        <summary class="font-semibold">📦 Categorías</summary>
-                        <ul>
-                            {
-                                categories.map((cat) => (
-                                    <li>
-                                        <a
-                                            href={`/categoria/${cat.id}`}
-                                            class="flex gap-3 items-center py-3"
-                                        >
-                                            <span class="text-2xl">
-                                                {cat.icon}
-                                            </span>
-                                            <span class="text-lg">
-                                                {cat.name}
-                                            </span>
-                                        </a>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </details>
-                </li>
-                <li>
-                    <a href="/nosotros" class="font-semibold">👥 Nosotros</a>
-                </li>
-                <li>
-                    <a href="/terminos" class="font-semibold">📜 Términos</a>
-                </li>
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h8m-8 6h16"></path></svg
+        >
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow-xl bg-base-100 rounded-box w-80 text-base-content"
+      >
+        <li><a href="/" class="font-semibold">🏠 Inicio</a></li>
+        <li>
+          <details open>
+            <summary class="font-semibold">📦 Categorías</summary>
+            <ul>
+              {
+                categories.map((cat) => (
+                  <li>
+                    <a
+                      href={`/categoria/${cat.id}`}
+                      class="flex gap-3 items-center py-3"
+                    >
+                      <span class="text-2xl">{cat.icon}</span>
+                      <span class="text-lg">{cat.name}</span>
+                    </a>
+                  </li>
+                ))
+              }
             </ul>
+          </details>
+        </li>
+        <li>
+          <a href="/nosotros" class="font-semibold">👥 Nosotros</a>
+        </li>
+        <li>
+          <a href="/terminos" class="font-semibold">📜 Términos</a>
+        </li>
+      </ul>
+    </div>
+    <a
+      href="/"
+      class="normal-case gap-1 hover:opacity-80 transition-opacity px-2 flex items-center"
+    >
+      <Logo 
+        class="h-8 sm:h-10 w-auto max-w-[140px] sm:max-w-none"
+        invertOnTransparent={isTransparent}
+      />
+    </a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1 text-base">
+      <li><a href="/" class="font-medium">Inicio</a></li>
+      <li>
+        <details>
+          <summary class="font-medium">Categorías</summary>
+          <ul
+            class="p-2 bg-base-100 rounded-t-none w-56 shadow-lg text-base-content"
+          >
+            {
+              categories.map((cat) => (
+                <li>
+                  <a
+                    href={`/categoria/${cat.id}`}
+                    class="flex gap-2 items-center py-2"
+                  >
+                    <span class="text-xl">{cat.icon}</span>
+                    <span>{cat.name}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </details>
+      </li>
+      <li><a href="/nosotros" class="font-medium">Nosotros</a></li>
+    </ul>
+  </div>
+  <div class="navbar-end gap-2">
+    <!-- WhatsApp Button -->
+    <a
+      href={`https://wa.me/51${whatsappNumber}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-ghost btn-circle hover:bg-gray hover:text-black transition-all"
+      title="Contáctanos por WhatsApp"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        ></path>
+      </svg>
+    </a>
+
+    <!-- Cart Dropdown -->
+    <div class="dropdown dropdown-end" id="cart-dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle group">
+        <div class="indicator">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+          </svg>
+          <span
+            class="badge badge-sm indicator-item badge-primary transition-transform duration-200 whitespace-nowrap w-5 h-5 p-0 flex justify-center items-center"
+            id="cart-count">0</span
+          >
         </div>
-        <a
-            href="/"
-            class="normal-case gap-1 hover:opacity-80 transition-opacity px-2 flex items-center"
-        >
-            <img
-                src={siteConfig.logo}
-                alt={siteConfig.name}
-                class:list={[
-                    "h-8 sm:h-10 w-auto max-w-[140px] sm:max-w-none navbar-logo",
-                    { "brightness-0 invert": isTransparent },
-                ]}
-            />
-        </a>
-    </div>
-    <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 text-base">
-            <li><a href="/" class="font-medium">Inicio</a></li>
-            <li>
-                <details>
-                    <summary class="font-medium">Categorías</summary>
-                    <ul
-                        class="p-2 bg-base-100 rounded-t-none w-56 shadow-lg text-base-content"
-                    >
-                        {
-                            categories.map((cat) => (
-                                <li>
-                                    <a
-                                        href={`/categoria/${cat.id}`}
-                                        class="flex gap-2 items-center py-2"
-                                    >
-                                        <span class="text-xl">{cat.icon}</span>
-                                        <span>{cat.name}</span>
-                                    </a>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </details>
-            </li>
-            <li><a href="/nosotros" class="font-medium">Nosotros</a></li>
-        </ul>
-    </div>
-    <div class="navbar-end gap-2">
-        <!-- WhatsApp Button -->
-        <a
-            href={`https://wa.me/51${whatsappNumber}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-ghost btn-circle text-green-500 hover:bg-green-500/10 hover:text-green-600 transition-all"
-            title="Contáctanos por WhatsApp"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-        
-        <!-- Cart Dropdown -->
-        <div class="dropdown dropdown-end" id="cart-dropdown">
-            <div
-                tabindex="0"
-                role="button"
-                class="btn btn-ghost btn-circle group"
+      </div>
+      <div
+        tabindex="0"
+        class="mt-3 z-1 card card-compact dropdown-content w-52 bg-base-100 shadow-xl text-base-content"
+      >
+        <div class="card-body">
+          <span class="font-bold text-lg" id="cart-items-count">0 Items</span>
+          <span class="text-primary font-bold" id="cart-subtotal"
+            >Subtotal: S/ 0.00</span
+          >
+          <div class="card-actions">
+            <label
+              for="cart-drawer"
+              class="btn btn-primary btn-block text-white">Ver Mi Pedido</label
             >
-                <div class="indicator">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        ></path>
-                    </svg>
-                    <span
-                        class="badge badge-sm indicator-item badge-primary transition-transform duration-200 whitespace-nowrap w-5 h-5 p-0 flex justify-center items-center"
-                        id="cart-count">0</span
-                    >
-                </div>
-            </div>
-            <div
-                tabindex="0"
-                class="mt-3 z-1 card card-compact dropdown-content w-52 bg-base-100 shadow-xl text-base-content"
-            >
-                <div class="card-body">
-                    <span class="font-bold text-lg" id="cart-items-count"
-                        >0 Items</span
-                    >
-                    <span class="text-primary font-bold" id="cart-subtotal"
-                        >Subtotal: S/ 0.00</span
-                    >
-                    <div class="card-actions">
-                        <label
-                            for="cart-drawer"
-                            class="btn btn-primary btn-block text-white"
-                            >Ver Mi Pedido</label
-                        >
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <style>
-    @keyframes pop {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.5);
-        }
-        100% {
-            transform: scale(1);
-        }
+  @keyframes pop {
+    0% {
+      transform: scale(1);
     }
-    .animate-pop {
-        animation: pop 0.3s ease-in-out;
+    50% {
+      transform: scale(1.5);
     }
-
-    /* Dark mode logo filter */
-    :global([data-theme="omegasalud-dark"]) .navbar-logo {
-        filter: brightness(0) invert(1);
+    100% {
+      transform: scale(1);
     }
+  }
+  .animate-pop {
+    animation: pop 0.3s ease-in-out;
+  }
 </style>
 
 <script>
-    import { cartItems } from "../store/cart";
+  import { cartItems } from "../store/cart";
 
-    // Banner hide on scroll
-    const promoBanner = document.getElementById("promo-banner");
-    let lastScrollY = 0;
-    
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        
-        if (promoBanner) {
-            if (currentScrollY > 50) {
-                promoBanner.classList.add("hidden");
-            } else {
-                promoBanner.classList.remove("hidden");
-            }
+  // Banner hide on scroll
+  const promoBanner = document.getElementById("promo-banner");
+  let lastScrollY = 0;
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+
+    if (promoBanner) {
+      if (currentScrollY > 50) {
+        promoBanner.classList.add("hidden");
+      } else {
+        promoBanner.classList.remove("hidden");
+      }
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  // Cart functionality
+  const cartCount = document.getElementById("cart-count");
+  const cartItemsCount = document.getElementById("cart-items-count");
+  const cartSubtotal = document.getElementById("cart-subtotal");
+
+  const cartDropdown = document.getElementById("cart-dropdown");
+  let previousCount = -1;
+  let dropdownTimeout: ReturnType<typeof setTimeout>;
+
+  cartItems.subscribe((items) => {
+    const count = Object.values(items).reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+    const subtotal = Object.values(items).reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+
+    if (cartCount) {
+      cartCount.innerText = count.toString();
+
+      if (previousCount !== -1 && count > previousCount) {
+        cartCount.classList.remove("animate-pop");
+        void cartCount.offsetWidth;
+        cartCount.classList.add("animate-pop");
+
+        if (cartDropdown) {
+          cartDropdown.classList.add("dropdown-open");
+          if (dropdownTimeout) clearTimeout(dropdownTimeout);
+          dropdownTimeout = setTimeout(() => {
+            cartDropdown.classList.remove("dropdown-open");
+          }, 2500);
         }
-        
-        lastScrollY = currentScrollY;
-    };
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
+      }
+      previousCount = count;
+    }
 
-    // Cart functionality
-    const cartCount = document.getElementById("cart-count");
-    const cartItemsCount = document.getElementById("cart-items-count");
-    const cartSubtotal = document.getElementById("cart-subtotal");
-
-    const cartDropdown = document.getElementById("cart-dropdown");
-    let previousCount = -1;
-    let dropdownTimeout: ReturnType<typeof setTimeout>;
-
-    cartItems.subscribe((items) => {
-        const count = Object.values(items).reduce(
-            (acc, item) => acc + item.quantity,
-            0,
-        );
-        const subtotal = Object.values(items).reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0,
-        );
-
-        if (cartCount) {
-            cartCount.innerText = count.toString();
-
-            if (previousCount !== -1 && count > previousCount) {
-                cartCount.classList.remove("animate-pop");
-                void cartCount.offsetWidth;
-                cartCount.classList.add("animate-pop");
-
-                if (cartDropdown) {
-                    cartDropdown.classList.add("dropdown-open");
-                    if (dropdownTimeout) clearTimeout(dropdownTimeout);
-                    dropdownTimeout = setTimeout(() => {
-                        cartDropdown.classList.remove("dropdown-open");
-                    }, 2500);
-                }
-            }
-            previousCount = count;
-        }
-
-        if (cartItemsCount) cartItemsCount.innerText = `${count} Items`;
-        if (cartSubtotal)
-            cartSubtotal.innerText = `Subtotal: S/ ${subtotal.toFixed(2)}`;
-    });
+    if (cartItemsCount) cartItemsCount.innerText = `${count} Items`;
+    if (cartSubtotal)
+      cartSubtotal.innerText = `Subtotal: S/ ${subtotal.toFixed(2)}`;
+  });
 </script>
