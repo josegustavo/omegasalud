@@ -81,28 +81,6 @@ collections:
         label: "Página Nosotros"
         file: "src/data/nosotros.yml"
         fields:
-      - name: "terminos"
-        label: "Términos y Condiciones"
-        file: "src/data/terminos.yml"
-        fields:
-          - {label: "Título", name: "titulo", widget: "string"}
-          - {label: "Subtítulo", name: "subtitulo", widget: "string"}
-          - {label: "Última Actualización", name: "ultima_actualizacion", widget: "string"}
-          - {label: "Introducción", name: "introduccion", widget: "markdown"}
-          - label: "Secciones"
-            name: "secciones"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "titulo", widget: "string"}
-              - {label: "Icono", name: "icono", widget: "select", options: ["shopping-cart", "credit-card", "truck", "package", "tag", "refresh", "shield", "message", "edit", "check"]}
-              - {label: "Contenido", name: "contenido", widget: "markdown"}
-          - label: "Nota Final"
-            name: "nota_final"
-            widget: "object"
-            fields:
-              - {label: "Título", name: "titulo", widget: "string"}
-              - {label: "Contenido", name: "contenido", widget: "text"}
-              - {label: "Texto del Botón", name: "boton_texto", widget: "string"}
           - {label: "Título", name: "title", widget: "string"}
           - {label: "Subtítulo", name: "subtitle", widget: "string"}
           - {label: "Imagen Principal", name: "heroImage", widget: "image"}
@@ -149,6 +127,29 @@ collections:
                 fields:
                   - {label: "Nombre", name: "name", widget: "string"}
                   - {label: "Descripción", name: "description", widget: "text"}
+
+      - name: "terminos"
+        label: "Términos y Condiciones"
+        file: "src/data/terminos.yml"
+        fields:
+          - {label: "Título", name: "titulo", widget: "string"}
+          - {label: "Subtítulo", name: "subtitulo", widget: "string"}
+          - {label: "Última Actualización", name: "ultima_actualizacion", widget: "string"}
+          - {label: "Introducción", name: "introduccion", widget: "markdown"}
+          - label: "Secciones"
+            name: "secciones"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "titulo", widget: "string"}
+              - {label: "Icono", name: "icono", widget: "select", options: ["shopping-cart", "credit-card", "truck", "package", "tag", "refresh", "shield", "message", "edit", "check"]}
+              - {label: "Contenido", name: "contenido", widget: "markdown"}
+          - label: "Nota Final"
+            name: "nota_final"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "titulo", widget: "string"}
+              - {label: "Contenido", name: "contenido", widget: "text"}
+              - {label: "Texto del Botón", name: "boton_texto", widget: "string"}
 
   - name: "hero"
     label: "Hero (Slider)"
