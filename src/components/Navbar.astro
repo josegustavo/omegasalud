@@ -297,9 +297,13 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
       cartCount.innerText = count.toString();
 
       if (previousCount !== -1 && count > previousCount) {
+        // Use requestAnimationFrame to restart animation without forced reflow
         cartCount.classList.remove("animate-pop");
-        void cartCount.offsetWidth;
-        cartCount.classList.add("animate-pop");
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            cartCount.classList.add("animate-pop");
+          });
+        });
 
         if (cartDropdown) {
           cartDropdown.classList.add("dropdown-open");

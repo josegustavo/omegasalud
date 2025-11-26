@@ -1,4 +1,5 @@
 ---
+import "../styles/global.css";
 import CartDrawer from "../components/CartDrawer.astro";
 import siteConfig from "../data/site.yml";
 
@@ -87,10 +88,19 @@ const socialImageURL = new URL(image, Astro.url);
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Non-blocking font loading with preload + swap -->
 		<link
+			rel="preload"
+			as="style"
 			href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
-			rel="stylesheet"
+			onload="this.onload=null;this.rel='stylesheet'"
 		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
 	</head>
 	<body class="antialiased font-sans">
 		<div class="drawer drawer-end">
@@ -134,7 +144,3 @@ const socialImageURL = new URL(image, Astro.url);
 		</script>
 	</body>
 </html>
-
-<script>
-	import "../styles/global.css";
-</script>
