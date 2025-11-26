@@ -83,8 +83,9 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
 >
   <div class="navbar-start">
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Abrir menú de navegación">
         <svg
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
           fill="none"
@@ -176,8 +177,10 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
       rel="noopener noreferrer"
       class="btn btn-ghost btn-circle hover:bg-gray hover:text-black transition-all"
       title="Contáctanos por WhatsApp"
+      aria-label="Contáctanos por WhatsApp"
     >
       <svg
+        aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
         fill="currentColor"
@@ -191,7 +194,7 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
 
     <!-- Cart Dropdown -->
     <div class="dropdown dropdown-end" id="cart-dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle group">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle group" aria-label="Carrito de compras">
         <div class="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -199,6 +202,7 @@ const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
+            aria-hidden="true"
           >
             <path
               stroke-linecap="round"

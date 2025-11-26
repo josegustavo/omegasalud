@@ -229,6 +229,7 @@ const jsonLd = {
                                         class="h-5 w-5 text-success"
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
+                                        aria-hidden="true"
                                     >
                                         <path
                                             fill-rule="evenodd"
@@ -252,6 +253,7 @@ const jsonLd = {
                         data-name={product.name}
                         data-price={product.price}
                         data-image={product.images[0]}
+                        aria-label={`Agregar ${product.name} al pedido`}
                     >
                         Agregar al Pedido
                         <svg
@@ -260,6 +262,7 @@ const jsonLd = {
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
+                            aria-hidden="true"
                         >
                             <path
                                 stroke-linecap="round"

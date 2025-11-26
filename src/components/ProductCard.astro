@@ -158,6 +158,7 @@ const getTagStyle = (tag: string) => {
                 data-name={name}
                 data-price={price}
                 data-image={image}
+                aria-label={`Agregar ${name} al carrito`}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -165,6 +166,7 @@ const getTagStyle = (tag: string) => {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                 >
                     <path
                         stroke-linecap="round"

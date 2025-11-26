@@ -86,8 +86,13 @@ const socialImageURL = new URL(image, Astro.url);
 			}
 		</script>
 
+		<!-- Preconnect to critical origins -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		
+		<!-- DNS prefetch for any external resources -->
+		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+		
 		<!-- Non-blocking font loading with preload + swap -->
 		<link
 			rel="preload"
@@ -104,7 +109,7 @@ const socialImageURL = new URL(image, Astro.url);
 	</head>
 	<body class="antialiased font-sans">
 		<div class="drawer drawer-end">
-			<input id="cart-drawer" type="checkbox" class="drawer-toggle" />
+			<input id="cart-drawer" type="checkbox" class="drawer-toggle" aria-label="Abrir o cerrar carrito" />
 			<div class="drawer-content flex flex-col min-h-screen">
 				<slot />
 			</div>
@@ -120,27 +125,42 @@ const socialImageURL = new URL(image, Astro.url);
 				</div>
 			</div>
 		</div>
+		<!-- Defer non-critical animations until after page load -->
 		<script>
-			import { inView, animate } from "motion";
+			// Defer animation initialization to not block initial render
+			if ('requestIdleCallback' in window) {
+				requestIdleCallback(async () => {
+					const { inView, animate } = await import("motion");
+					initAnimations(inView, animate);
+				});
+			} else {
+				// Fallback for Safari
+				setTimeout(async () => {
+					const { inView, animate } = await import("motion");
+					initAnimations(inView, animate);
+				}, 1);
+			}
 
-			// Global animation for elements with .animate-on-scroll
-			inView(".animate-on-scroll", (element) => {
-				animate(
-					element,
-					{ opacity: [0, 1], y: [30, 0] },
-					{ duration: 0.6, easing: "ease-out" },
-				);
-			});
+			function initAnimations(inView: any, animate: any) {
+				// Global animation for elements with .animate-on-scroll
+				inView(".animate-on-scroll", (element: Element) => {
+					animate(
+						element,
+						{ opacity: [0, 1], y: [30, 0] },
+						{ duration: 0.6, easing: "ease-out" },
+					);
+				});
 
-			// Staggered animation for grids (like product cards)
-			inView(".animate-grid", (element) => {
-				const children = element.querySelectorAll(".animate-item");
-				animate(
-					children,
-					{ opacity: [0, 1], y: [20, 0] },
-					{ duration: 0.5, delay: 0.1, easing: "ease-out" }, // Staggering handled by delay if needed, or just simple batch
-				);
-			});
+				// Staggered animation for grids (like product cards)
+				inView(".animate-grid", (element: Element) => {
+					const children = element.querySelectorAll(".animate-item");
+					animate(
+						children,
+						{ opacity: [0, 1], y: [20, 0] },
+						{ duration: 0.5, delay: 0.1, easing: "ease-out" },
+					);
+				});
+			}
 		</script>
 	</body>
 </html>
