@@ -27,6 +27,7 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
                             width={1920}
                             height={820}
                             loading={index === 0 ? "eager" : "lazy"}
+                            fetchpriority={index === 0 ? "high" : "auto"}
                             class="absolute inset-0 w-full h-full object-cover scale-110 transition-transform duration-100 ease-out will-change-transform"
                         />
                         
@@ -114,10 +115,28 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
     const totalSlides = slides.length;
     let currentIndex = 0;
     let intervalId: any;
+    let cachedSliderWidth: number | null = null;
+
+    // Cache slider width to avoid repeated layout reads
+    const updateSliderWidth = () => {
+        if (slider) {
+            cachedSliderWidth = slider.clientWidth;
+        }
+    };
+
+    // Initial width calculation
+    updateSliderWidth();
+
+    // Update on resize (debounced)
+    let widthResizeTimeout: any;
+    window.addEventListener("resize", () => {
+        clearTimeout(widthResizeTimeout);
+        widthResizeTimeout = setTimeout(updateSliderWidth, 100);
+    }, { passive: true });
 
     // Function to scroll to a specific slide
     const scrollToSlide = (index: number) => {
-        if (!slider) return;
+        if (!slider || cachedSliderWidth === null) return;
 
         // Handle wrapping
         if (index < 0) index = totalSlides - 1;
@@ -125,14 +144,17 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
 
         currentIndex = index;
 
-        // Calculate scroll position
-        const scrollAmount = slider.clientWidth * currentIndex;
+        // Use cached width to avoid layout read
+        const scrollAmount = cachedSliderWidth * currentIndex;
         slider.scrollTo({
             left: scrollAmount,
             behavior: "smooth",
         });
 
-        updateActiveDot();
+        // Batch DOM writes in next frame
+        requestAnimationFrame(() => {
+            updateActiveDot();
+        });
     };
 
     // Update active dot style
@@ -194,12 +216,17 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
         slider.addEventListener("scroll", () => {
             window.clearTimeout(isScrolling);
             isScrolling = setTimeout(() => {
+                // Read layout properties
                 const scrollLeft = slider.scrollLeft;
-                const width = slider.clientWidth;
+                const width = cachedSliderWidth || slider.clientWidth;
                 currentIndex = Math.round(scrollLeft / width);
-                updateActiveDot();
+                
+                // Batch DOM writes in next frame
+                requestAnimationFrame(() => {
+                    updateActiveDot();
+                });
             }, 100); // Debounce
-        });
+        }, { passive: true });
 
         // Pause on hover/touch
         slider.addEventListener("mouseenter", stopAutoSlide);
@@ -212,33 +239,68 @@ const heroSlides = Object.values(heroFiles).map((file: any) => file.default || f
     updateActiveDot();
     startAutoSlide();
 
-    // Parallax Effect
+    // Parallax Effect - Optimized to avoid forced reflows
     const parallaxSlides = document.querySelectorAll(".carousel-item");
     
     parallaxSlides.forEach((slide) => {
-        const image = slide.querySelector("img");
+        const image = slide.querySelector("img") as HTMLImageElement;
         if (!image) return;
+
+        // Cache bounding rect to avoid repeated layout reads
+        let cachedRect: DOMRect | null = null;
+        let rafId: number | null = null;
+
+        // Update cached rect on resize/scroll (debounced)
+        const updateRect = () => {
+            cachedRect = slide.getBoundingClientRect();
+        };
+
+        // Initial rect calculation
+        updateRect();
+
+        // Update rect on window resize (debounced)
+        let resizeTimeout: any;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateRect, 100);
+        }, { passive: true });
 
         slide.addEventListener("mousemove", (e) => {
             const evt = e as MouseEvent;
-            const { left, top, width, height } = slide.getBoundingClientRect();
             
-            // Calculate mouse position relative to center (-0.5 to 0.5)
-            const x = (evt.clientX - left) / width - 0.5;
-            const y = (evt.clientY - top) / height - 0.5;
+            // Use cached rect to avoid layout thrashing
+            if (!cachedRect) return;
+            
+            // Cancel previous frame if still pending
+            if (rafId) cancelAnimationFrame(rafId);
+            
+            // Batch the style write in the next animation frame
+            rafId = requestAnimationFrame(() => {
+                const { left, top, width, height } = cachedRect!;
+                
+                // Calculate mouse position relative to center (-0.5 to 0.5)
+                const x = (evt.clientX - left) / width - 0.5;
+                const y = (evt.clientY - top) / height - 0.5;
 
-            // Move image opposite to mouse direction
-            // Max movement: 20px (adjust multiplier to control intensity)
-            const moveX = x * -20; 
-            const moveY = y * -20;
+                // Move image opposite to mouse direction
+                const moveX = x * -20; 
+                const moveY = y * -20;
 
-            image.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
-        });
+                image.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+                rafId = null;
+            });
+        }, { passive: true });
 
         // Reset on leave
         slide.addEventListener("mouseleave", () => {
-            image.style.transform = "scale(1.1) translate(0px, 0px)";
-            // Note: transition-duration is handled by CSS class
-        });
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                image.style.transform = "scale(1.1) translate(0px, 0px)";
+                rafId = null;
+            });
+        }, { passive: true });
+
+        // Update rect when slide comes into view
+        slide.addEventListener("mouseenter", updateRect, { passive: true });
     });
 </script>

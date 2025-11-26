@@ -12,10 +12,11 @@ interface Props {
   height?: number;
   class?: string;
   loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
   [key: string]: any;
 }
 
-const { src, alt, width, height, class: className, loading = 'lazy', ...rest } = Astro.props;
+const { src, alt, width, height, class: className, loading = 'lazy', fetchpriority, ...rest } = Astro.props;
 
 // Importar todas las imágenes de src/assets/uploads
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -56,6 +57,7 @@ const isOptimized = typeof optimizedSrc !== 'string';
     height={height}
     class={className}
     loading={loading}
+    fetchpriority={fetchpriority}
     format="webp"
     quality={80}
     {...rest}
@@ -68,6 +70,7 @@ const isOptimized = typeof optimizedSrc !== 'string';
     height={height}
     class={className}
     loading={loading}
+    fetchpriority={fetchpriority}
     {...rest}
   />
 )}
