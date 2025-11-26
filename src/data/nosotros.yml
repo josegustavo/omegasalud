@@ -1,0 +1,57 @@
+title: "Nosotros"
+subtitle: "Conoce nuestra historia y compromiso con tu bienestar"
+heroImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
+
+intro: "En **Omega Salud**, nos dedicamos a llevar bienestar a tu hogar a través de productos naturales de la más alta calidad. Creemos que la salud comienza con lo que consumimos, por eso seleccionamos cuidadosamente cada producto que ofrecemos."
+
+mission:
+  title: "Nuestra Misión"
+  content: "Fomentar un estilo de vida saludable ofreciendo alternativas naturales, libres de químicos y procesados. Trabajamos de la mano con productores locales comprometidos con la calidad y el respeto al medio ambiente, llevando lo mejor de la naturaleza directamente a tu mesa."
+
+vision:
+  title: "Nuestra Visión"
+  content: "Ser el referente principal en productos naturales y saludables en Huaycán y Lima Este, reconocidos por nuestra calidad, servicio personalizado y compromiso genuino con el bienestar de nuestros clientes y sus familias."
+
+whyUs:
+  title: "¿Por qué elegirnos?"
+  items:
+    - title: "Calidad Garantizada"
+      description: "Seleccionamos rigurosamente cada producto, trabajando solo con proveedores certificados que comparten nuestros estándares de calidad."
+      icon: "✓"
+    - title: "Atención Personalizada"
+      description: "Te asesoramos en tu compra vía WhatsApp. Resolvemos tus dudas y te ayudamos a elegir los productos ideales para ti y tu familia."
+      icon: "💬"
+    - title: "Entrega Rápida"
+      description: "Llevamos tu pedido a la puerta de tu casa en Huaycán, Ate y zonas aledañas. ¡Incluso el mismo día en zonas seleccionadas!"
+      icon: "🚚"
+    - title: "Precios Justos"
+      description: "Ofrecemos productos de calidad premium a precios accesibles, porque creemos que cuidar tu salud no debería ser un lujo."
+      icon: "💰"
+
+history:
+  title: "Nuestra Historia"
+  image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=800&auto=format&fit=crop"
+  content: |
+    Todo comenzó en 2019, cuando Rosa y José, una pareja de Huaycán apasionada por la alimentación saludable, notaron algo que les preocupaba: en su comunidad era muy difícil encontrar productos naturales de calidad. Las opciones eran limitadas y muchas veces había que viajar hasta el centro de Lima para conseguir algo tan simple como aceite de coco orgánico o miel pura de abeja.
+
+    Lo que empezó como compras para consumo propio, pronto se convirtió en pedidos para familiares y vecinos que también buscaban alternativas más saludables. "¿Me puedes traer un frasco de stevia?", "¿Tienes más de ese vinagre de manzana?", eran preguntas cada vez más frecuentes.
+
+    Fue así como, desde un pequeño espacio en casa y con mucha ilusión, nació **Omega Salud**. El nombre no fue casualidad: queríamos transmitir ese equilibrio entre lo natural y lo nutritivo, ese "omega" que representa lo esencial para una vida plena.
+
+    Hoy, después de años de crecimiento constante, seguimos siendo ese emprendimiento familiar que prioriza la calidad sobre la cantidad. Conocemos personalmente a nuestros proveedores, probamos cada producto antes de ofrecerlo, y tratamos a cada cliente como parte de nuestra familia.
+
+    Nuestra mayor satisfacción es cuando un cliente nos cuenta que gracias a nuestros productos pudo mejorar su alimentación, controlar su diabetes con endulzantes naturales, o simplemente disfrutar de una miel pura como la que recordaba de su infancia.
+
+    **Gracias por confiar en nosotros. Gracias por ser parte de esta historia.**
+
+values:
+  title: "Nuestros Valores"
+  items:
+    - name: "Honestidad"
+      description: "Transparencia total en lo que vendemos y cómo lo vendemos."
+    - name: "Calidad"
+      description: "Solo ofrecemos productos que consumiríamos nosotros mismos."
+    - name: "Compromiso"
+      description: "Tu satisfacción es nuestra prioridad número uno."
+    - name: "Comunidad"
+      description: "Apoyamos a productores locales y el comercio justo."

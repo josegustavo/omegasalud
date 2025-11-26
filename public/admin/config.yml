@@ -77,6 +77,78 @@ collections:
               - {label: "Título por Defecto", name: "defaultTitle", widget: "string"}
               - {label: "Descripción por Defecto", name: "defaultDescription", widget: "text"}
               - {label: "Imagen Social", name: "socialImage", widget: "image"}
+      - name: "nosotros"
+        label: "Página Nosotros"
+        file: "src/data/nosotros.yml"
+        fields:
+      - name: "terminos"
+        label: "Términos y Condiciones"
+        file: "src/data/terminos.yml"
+        fields:
+          - {label: "Título", name: "titulo", widget: "string"}
+          - {label: "Subtítulo", name: "subtitulo", widget: "string"}
+          - {label: "Última Actualización", name: "ultima_actualizacion", widget: "string"}
+          - {label: "Introducción", name: "introduccion", widget: "markdown"}
+          - label: "Secciones"
+            name: "secciones"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "titulo", widget: "string"}
+              - {label: "Icono", name: "icono", widget: "select", options: ["shopping-cart", "credit-card", "truck", "package", "tag", "refresh", "shield", "message", "edit", "check"]}
+              - {label: "Contenido", name: "contenido", widget: "markdown"}
+          - label: "Nota Final"
+            name: "nota_final"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "titulo", widget: "string"}
+              - {label: "Contenido", name: "contenido", widget: "text"}
+              - {label: "Texto del Botón", name: "boton_texto", widget: "string"}
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Subtítulo", name: "subtitle", widget: "string"}
+          - {label: "Imagen Principal", name: "heroImage", widget: "image"}
+          - {label: "Introducción", name: "intro", widget: "markdown"}
+          - label: "Misión"
+            name: "mission"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Contenido", name: "content", widget: "markdown"}
+          - label: "Visión"
+            name: "vision"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Contenido", name: "content", widget: "markdown"}
+          - label: "¿Por qué elegirnos?"
+            name: "whyUs"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - {label: "Título", name: "title", widget: "string"}
+                  - {label: "Descripción", name: "description", widget: "text"}
+                  - {label: "Icono (emoji)", name: "icon", widget: "string"}
+          - label: "Nuestra Historia"
+            name: "history"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Contenido", name: "content", widget: "markdown"}
+          - label: "Nuestros Valores"
+            name: "values"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - {label: "Nombre", name: "name", widget: "string"}
+                  - {label: "Descripción", name: "description", widget: "text"}
 
   - name: "hero"
     label: "Hero (Slider)"

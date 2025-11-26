@@ -4,10 +4,11 @@ const heroFiles = import.meta.glob('../data/hero/*.yml', { eager: true });
 const heroSlides = Object.values(heroFiles).map((file: any) => file.default || file);
 ---
 
-<div class="relative group w-full">
+<!-- Hero sube detrás del navbar transparente -->
+<div class="relative group w-full -mt-16">
     <!-- Slider Container -->
     <div
-        class="carousel w-full h-[60vh] lg:h-auto lg:aspect-[21/9] overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
+        class="carousel w-full h-[70vh] lg:h-auto lg:aspect-21/9 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
         id="hero-slider"
     >
         {
