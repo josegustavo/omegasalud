@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 // Importar todos los archivos YAML de la carpeta promotions
 const promotionFiles = import.meta.glob('../data/promotions/*.yml', { eager: true });
 const promotions = Object.values(promotionFiles).map((file: any) => file.default || file);
@@ -75,11 +77,13 @@ const getColorClasses = (color: string) => {
 
                         {/* Image - right side */}
                         <div class="absolute right-0 top-0 w-2/5 h-full flex items-center justify-center">
-                            <img
+                            <Image
                                 src={promo.image}
                                 alt={promo.title}
-                                class="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-110"
+                                width={300}
+                                height={300}
                                 loading="lazy"
+                                class="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-110"
                             />
                         </div>
 

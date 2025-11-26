@@ -1,6 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from "../../layouts/Layout.astro";
-import Navbar from "../../components/Navbar.astro";
+import Navbar from "../../components/Navbar.astro";;
 import Footer from "../../components/Footer.astro";
 import ProductCard from "../../components/ProductCard.astro";
 import { products } from "../../data/products";
@@ -70,23 +71,28 @@ const jsonLd = {
                 <div
                     class="rounded-2xl overflow-hidden shadow-lg border border-base-200 bg-base-100"
                 >
-                    <img
+                    <Image
                         src={product.images[0]}
                         alt={product.name}
+                        width={600}
+                        height={600}
+                        loading="eager"
                         class="w-full h-96 object-contain p-4"
                         id="main-image"
                     />
                 </div>
                 <div class="flex gap-4 overflow-x-auto pb-2">
-                    {
-                        product.images.map((img, index) => (
+                    {product.images.map((img, index) => (
                             <button
                                 class="w-20 h-20 rounded-lg border-2 border-transparent hover:border-primary overflow-hidden transition-all thumbnail"
                                 data-src={img}
                             >
-                                <img
+                                <Image
                                     src={img}
                                     alt={`${product.name} ${index + 1}`}
+                                    width={80}
+                                    height={80}
+                                    loading="lazy"
                                     class="w-full h-full object-cover"
                                 />
                             </button>
