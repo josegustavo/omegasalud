@@ -1,6 +1,6 @@
 title: "Nosotros"
 subtitle: "Conoce nuestra historia y compromiso con tu bienestar"
-heroImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
+heroImage: "/images/uploads/nosotros-banner.png"
 
 intro: "En **Omega Salud**, nos dedicamos a llevar bienestar a tu hogar a través de productos naturales de la más alta calidad. Creemos que la salud comienza con lo que consumimos, por eso seleccionamos cuidadosamente cada producto que ofrecemos."
 
@@ -30,17 +30,13 @@ whyUs:
 
 history:
   title: "Nuestra Historia"
-  image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=800&auto=format&fit=crop"
+  image: "/images/uploads/nosotros-mercado.png"
   content: |
-    Todo comenzó en 2019, cuando Rosa y José, una pareja de Huaycán apasionada por la alimentación saludable, notaron algo que les preocupaba: en su comunidad era muy difícil encontrar productos naturales de calidad. Las opciones eran limitadas y muchas veces había que viajar hasta el centro de Lima para conseguir algo tan simple como aceite de coco orgánico o miel pura de abeja.
+    Todo comenzó cuando Simón y Prudencia, por experiencias personales de salud, se dieron cuenta de la importancia de cuidar lo que consumían. Al buscar productos naturales de calidad en Huaycán, descubrieron que las opciones eran muy limitadas y conseguir algo tan simple como aceite de coco orgánico o miel pura requería viajar hasta el centro de Lima.
 
-    Lo que empezó como compras para consumo propio, pronto se convirtió en pedidos para familiares y vecinos que también buscaban alternativas más saludables. "¿Me puedes traer un frasco de stevia?", "¿Tienes más de ese vinagre de manzana?", eran preguntas cada vez más frecuentes.
+    Lo que empezó como compras para consumo propio, pronto se convirtió en pedidos para familiares y vecinos. "¿Me puedes traer stevia?", "¿Tienes más de ese vinagre de manzana?", eran preguntas cada vez más frecuentes. Así nació **Omega Salud**, un nombre que representa lo esencial para una vida plena y equilibrada.
 
-    Fue así como, desde un pequeño espacio en casa y con mucha ilusión, nació **Omega Salud**. El nombre no fue casualidad: queríamos transmitir ese equilibrio entre lo natural y lo nutritivo, ese "omega" que representa lo esencial para una vida plena.
-
-    Hoy, después de años de crecimiento constante, seguimos siendo ese emprendimiento familiar que prioriza la calidad sobre la cantidad. Conocemos personalmente a nuestros proveedores, probamos cada producto antes de ofrecerlo, y tratamos a cada cliente como parte de nuestra familia.
-
-    Nuestra mayor satisfacción es cuando un cliente nos cuenta que gracias a nuestros productos pudo mejorar su alimentación, controlar su diabetes con endulzantes naturales, o simplemente disfrutar de una miel pura como la que recordaba de su infancia.
+    Hoy seguimos siendo ese emprendimiento familiar que prioriza la calidad sobre la cantidad. Conocemos personalmente a nuestros proveedores, probamos cada producto antes de ofrecerlo, y tratamos a cada cliente como parte de nuestra familia.
 
     **Gracias por confiar en nosotros. Gracias por ser parte de esta historia.**
 

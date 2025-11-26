@@ -5,7 +5,7 @@ interface Props {
     isTransparent?: boolean;
 }
 
-const { isTransparent = false } = Astro.props;
+const { isTransparent = true } = Astro.props;
 const whatsappNumber = siteConfig.social?.whatsapp || siteConfig.whatsapp || "";
 ---
 
