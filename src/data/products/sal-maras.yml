@@ -3,7 +3,9 @@ brand: Andes Salt
 presentation: Bolsa 500g
 price: 12
 images:
-  - /images/uploads/generated-image-november-22-2025-12_21pm.png
+  - src: /images/uploads/generated-image-november-22-2025-12_21pm.png
+    alt: Sal de Maras rosada en bolsa de 500g - Rica en minerales
+    title: Sal de Maras Andes Salt
 categories:
   - condimentos
 variantId: sal-maras

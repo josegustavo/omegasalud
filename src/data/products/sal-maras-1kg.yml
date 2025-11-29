@@ -4,7 +4,9 @@ presentation: Bolsa 1kg
 price: 28.00
 originalPrice: 35.00
 images:
-  - https://images.unsplash.com/photo-1626139576127-4525a7096b1c?q=80&w=800&auto=format&fit=crop
+  - src: https://images.unsplash.com/photo-1626139576127-4525a7096b1c?q=80&w=800&auto=format&fit=crop
+    alt: Sal de Maras rosada premium en bolsa de 1kg - Extraída de Cusco
+    title: Sal de Maras Premium Valle Sagrado
 description: Sal rosada de Maras extraída artesanalmente de las salineras de Cusco. Presentación familiar de 1kg.
 properties:
   - 100% Natural

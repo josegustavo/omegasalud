@@ -1,59 +1,67 @@
-name: Aceite de Coco
+name: Aceite de Coco Virgen
 brand: Olivos del Sur
 presentation: Pote de Vidrio 850ml
 price: 49.9
 originalPrice: 62
-images:
-  - /images/uploads/aceite-coco2.png
-  - /images/uploads/aceite-coco.png
+productImages:
+  main:
+    src: /images/uploads/aceite-coco2.png
+    alt: Aceite de coco virgen en pote de vidrio 850ml - Vista frontal del producto
+    title: Aceite de Coco Virgen Olivos del Sur 850ml
+  gallery:
+    - src: /images/uploads/aceite-coco.png
+      alt: Aceite de coco virgen - Detalle de la textura cremosa y consistencia
+      title: Textura del Aceite de Coco Virgen
+  og:
+    src: /images/uploads/aceite-coco-og.png
+    alt: Aceite de Coco Virgen Olivos del Sur - Producto natural para cocina y belleza
+    title: Aceite de Coco Virgen - OmegaSalud
 categories:
   - aceites
 tags:
   - Cosmético
   - Vegano
+  - Sin Refinar
 description: >-
-  Descubre la pureza y versatilidad de nuestro Aceite de Coco en su presentación
-  familiar de 850ml. Envasado cuidadosamente en un pote de vidrio para
-  garantizar que sus nutrientes, sabor y aroma se mantengan intactos y libres de
-  contaminantes plásticos. 
-
-
-  Este superalimento es el aliado perfecto para quienes buscan un estilo de vida saludable, ofreciendo una solución integral tanto para elevar el nivel nutricional de tus comidas como para potenciar tu rutina de belleza natural.
+  Aceite de coco virgen 100% puro, prensado en frío y envasado en vidrio. Ideal para cocinar, hidratar piel y cabello. Sin químicos ni conservantes. Presentación familiar de 850ml perfecta para toda la familia. Delivery en Lima y envíos a todo el Perú.
 properties:
-  - 100% natural
-  - rico en grasas saturadas saludables
+  - 100% puro y natural
+  - prensado en frío (sin refinar)
   - alto contenido de ácido láurico
-  - propiedades antibacterianas
-  - propiedades antifungicidas
-  - libre de grasas trans
-  - termoestable (resistente a altas temperaturas)
-  - envasado en vidrio ecológico.
-benefits:
-  - Este aceite no es solo un ingrediente
-  - "es una inversión en tu salud a largo plazo: Salud Cardiovascular: Su
-    composición única ayuda a incrementar los niveles de colesterol bueno (HDL)"
-  - "lo que promueve una mejor salud vascular y contribuye a reducir el riesgo
-    de enfermedades cardíacas e infartos. Control de Triglicéridos: El consumo
-    regular y moderado ayuda a reducir las cantidades de triglicéridos en la
-    sangre. Escudo Protector: Gracias a su alto contenido de Ácido Láurico"
-  - actúa como un potente agente antibacteriano y antifungicida
-  - "ayudando a tu cuerpo a combatir infecciones y hongos de manera natural.
-    Nutrición Profunda: Al aplicarse tópicamente"
-  - sus ácidos grasos penetran profundamente en la piel y el cabello
-  - reparando daños y reteniendo la humedad mejor que muchas cremas comerciales.
-usage: >-
-  🥥 En la Cocina (Gastronomía):
+  - libre de químicos y conservantes
+  - apto para veganos
+  - resistente a altas temperaturas
+  - envasado en vidrio libre de BPA
+  - sin aroma artificial
+benefits: |
+  Más que un aceite, es tu **aliado natural para verte y sentirte bien**:
 
-  Salteados y Frituras: Es ideal para cocinar a altas temperaturas ya que no se oxida fácilmente como otros aceites vegetales.
+  - **Cocina sin culpa:** Resiste altas temperaturas sin quemarse ni generar toxinas. Perfecto para freír, saltear o hacer postres más saludables.
 
-  Repostería Saludable: Sustituye la mantequilla o margarina por aceite de coco en tus queques, galletas y postres para darles un toque más ligero y nutritivo.
+  - **Más energía:** Sus grasas saludables se convierten rápidamente en energía. Añádelo a tu café o batido de la mañana.
 
-  Potenciador de Bebidas: Añade una cucharadita a tu café matutino o a tus batidos de frutas para un extra de energía inmediata y cremosisdad.
+  - **Defensa natural:** El ácido láurico fortalece tu sistema inmune y combate bacterias y hongos de forma natural.
 
-  ✨ Cosmética y Cuidado Personal:
+  - **Piel suave e hidratada:** Penetra profundamente dejando tu piel nutrida, sin sensación grasosa. Ideal para codos, rodillas y manos secas.
 
-  Mascarilla Capilar: Aplícalo de medios a puntas en el cabello seco, déjalo actuar por 20 minutos antes de lavarlo para un brillo y suavidad extremos.
+  - **Cabello brillante:** Repara puntas dañadas y aporta brillo natural. Tu mejor tratamiento capilar sin químicos.
+usage: |
+  ## En tu cocina
 
-  Hidratante Corporal: Úsalo directamente sobre la piel después de la ducha para una hidratación profunda (ideal para codos y rodillas secas).
+  - **Para freír y saltear:** No se oxida a altas temperaturas como otros aceites. Tus frituras quedan crujientes y más saludables.
 
-  Desmaquillante Natural: Derrite el maquillaje (incluso el resistente al agua) suavemente mientras nutres tus pestañas y piel.
+  - **En repostería:** Reemplaza la mantequilla en queques, galletas y brownies. Mismo sabor, menos culpa.
+
+  - **Café bulletproof:** 1 cucharadita en tu café de la mañana = energía sostenida sin el bajón de media mañana.
+
+  - **Batidos y smoothies:** Añade cremosidad y nutrientes a tus licuados de frutas.
+
+  ## Para tu belleza
+
+  - **Hidratante corporal:** Aplica después de la ducha sobre piel húmeda. Se absorbe rápido y no mancha la ropa.
+
+  - **Mascarilla capilar:** De medios a puntas, deja 20 min y lava normal. Resultados desde la primera aplicación.
+
+  - **Desmaquillante:** Retira hasta el maquillaje waterproof sin irritar. Deja la piel nutrida.
+
+  - **Bálsamo labial:** Una gotita en los labios antes de dormir y amaneces sin resequedad.

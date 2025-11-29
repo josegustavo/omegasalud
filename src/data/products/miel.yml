@@ -4,7 +4,9 @@ presentation: Frasco 500g
 price: 35
 originalPrice: 40
 images:
-  - /images/uploads/miel-de-abeja.png
+  - src: /images/uploads/miel-de-abeja.png
+    alt: Miel de abeja orgánica pura en frasco de 500g - Sin aditivos
+    title: Miel de Abeja Orgánica Apiario Real
 categories:
   - miel
 tags:

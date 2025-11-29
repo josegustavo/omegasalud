@@ -2,12 +2,13 @@
 // Prerender para optimizar imágenes en build time
 export const prerender = true;
 
+import { marked } from 'marked';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import ProductCard from "../../components/ProductCard.astro";
-import { products, categories } from "../../data/products";
+import { products, categories, getProductGallery, getMainImage, getOgImage } from "../../data/products";
 import siteConfig from "../../data/site.yml";
 
 // Generar rutas estáticas para todos los productos (una ruta por cada combinación producto-categoría)
@@ -37,6 +38,11 @@ if (!product) {
     return Astro.redirect("/404");
 }
 
+// Obtener imágenes usando los nuevos helpers
+const galleryImages = getProductGallery(product);
+const mainImage = getMainImage(product);
+const ogImage = getOgImage(product);
+
 // Filter related products: same category, excluding current product
 const relatedProducts = products
     .filter(
@@ -46,11 +52,34 @@ const relatedProducts = products
     )
     .slice(0, 4);
 
+// Procesar markdown para beneficios y uso
+// Soporta tanto el formato string (markdown) como array (formato legacy)
+let benefitsHtml = '';
+if (product.benefits) {
+    if (Array.isArray(product.benefits)) {
+        // Formato legacy: convertir array a lista markdown
+        const md = product.benefits.map(b => `- ${b}`).join('\n');
+        benefitsHtml = await marked.parse(md);
+    } else {
+        benefitsHtml = await marked.parse(product.benefits);
+    }
+}
+
+let usageHtml = '';
+if (product.usage) {
+    if (Array.isArray(product.usage)) {
+        const md = (product.usage as string[]).map(u => `- ${u}`).join('\n');
+        usageHtml = await marked.parse(md);
+    } else {
+        usageHtml = await marked.parse(product.usage);
+    }
+}
+
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    image: product.images[0],
+    image: mainImage.src,
     description: product.description,
     brand: {
         "@type": "Brand",
@@ -69,7 +98,7 @@ const jsonLd = {
 <Layout
     title={`${product.name} | ${siteConfig.name}`}
     description={product.description}
-    image={product.images[0]}
+    image={ogImage.src}
     type="article"
 >
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -91,27 +120,30 @@ const jsonLd = {
             <!-- Image Gallery -->
             <div class="space-y-4">
                 <div
-                    class="rounded-2xl overflow-hidden shadow-lg border border-base-200 bg-base-100"
+                    class="rounded-2xl overflow-hidden shadow-lg border border-base-200 bg-base-100 aspect-square"
                 >
                     <OptimizedImage
-                        src={product.images[0]}
-                        alt={product.name}
+                        src={galleryImages[0].src}
+                        alt={galleryImages[0].alt}
+                        title={galleryImages[0].title}
                         width={600}
                         height={600}
                         loading="eager"
-                        class="w-full h-96 object-contain p-4"
+                        class="w-full h-full object-contain p-4"
                         id="main-image"
                     />
                 </div>
                 <div class="flex gap-4 overflow-x-auto pb-2">
-                    {product.images.map((img, index) => (
+                    {galleryImages.map((img, index) => (
                             <button
                                 class="w-20 h-20 rounded-lg border-2 border-transparent hover:border-primary overflow-hidden transition-all thumbnail"
-                                data-src={img}
+                                data-src={img.src}
+                                title={img.title}
                             >
                                 <OptimizedImage
-                                    src={img}
-                                    alt={`${product.name} ${index + 1}`}
+                                    src={img.src}
+                                    alt={img.alt}
+                                    title={img.title}
                                     width={80}
                                     height={80}
                                     loading="lazy"
@@ -218,31 +250,33 @@ const jsonLd = {
 
                 <div class="divider"></div>
 
-                <div>
-                    <h3 class="font-bold text-lg mb-3">Características:</h3>
-                    <ul class="space-y-2">
-                        {
-                            product.properties.map((prop) => (
-                                <li class="flex items-center gap-2">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-success"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                    {prop}
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
+                {product.properties && product.properties.length > 0 && (
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">Características:</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {
+                                product.properties.map((prop) => (
+                                    <li class="flex items-center gap-2">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-success flex-shrink-0"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
+                                        {prop}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                )}
 
                 <div class="divider"></div>
 
@@ -252,7 +286,7 @@ const jsonLd = {
                         data-id={product.id}
                         data-name={product.name}
                         data-price={product.price}
-                        data-image={product.images[0]}
+                        data-image={mainImage.src}
                         aria-label={`Agregar ${product.name} al pedido`}
                     >
                         Agregar al Pedido
@@ -275,6 +309,25 @@ const jsonLd = {
                 </div>
             </div>
         </div>
+
+        <!-- Beneficios y Modo de Uso - Sección completa -->
+        {(benefitsHtml || usageHtml) && (
+            <div class="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                {benefitsHtml && (
+                    <div class="bg-base-200/50 rounded-2xl p-6 lg:p-8">
+                        <h3 class="font-bold text-xl mb-4">Beneficios</h3>
+                        <div class="prose prose-sm lg:prose-base max-w-none text-base-content/80 prose-headings:text-primary prose-strong:text-base-content prose-ul:my-2 prose-li:my-0" set:html={benefitsHtml} />
+                    </div>
+                )}
+
+                {usageHtml && (
+                    <div class="bg-base-200/50 rounded-2xl p-6 lg:p-8">
+                        <h3 class="font-bold text-xl mb-4">Modo de Uso</h3>
+                        <div class="prose prose-sm lg:prose-base max-w-none text-base-content/80 prose-headings:text-primary prose-strong:text-base-content prose-ul:my-2 prose-li:my-0" set:html={usageHtml} />
+                    </div>
+                )}
+            </div>
+        )}
 
         <!-- Related Products Section -->
         <div class="mt-24">

@@ -1,12 +1,16 @@
 ---
 import OptimizedImage from './OptimizedImage.astro';
+import type { ProductImage, ProductImages } from '../data/products';
 
 interface Props {
     id: string;
     name: string;
     price: number;
     originalPrice?: number;
-    images: string[];
+    // Nueva estructura de imágenes
+    productImages?: ProductImages;
+    // Legacy: array de imágenes
+    images?: ProductImage[] | string[];
     brand: string;
     presentation: string;
     tags?: string[];
@@ -18,13 +22,36 @@ const {
     name,
     price,
     originalPrice,
+    productImages,
     images,
     brand,
     presentation,
     tags = [],
     categories = [],
 } = Astro.props;
-const image = images && images.length > 0 ? images[0] : "/placeholder.png";
+
+// Obtener imagen principal - priorizar nueva estructura
+let image = "/placeholder.png";
+let imageAlt = name;
+let imageTitle = name;
+
+if (productImages?.main) {
+    // Nueva estructura
+    image = productImages.main.src;
+    imageAlt = productImages.main.alt;
+    imageTitle = productImages.main.title || name;
+} else if (images && images.length > 0) {
+    // Formato legacy
+    const firstImage = images[0];
+    if (typeof firstImage === 'string') {
+        image = firstImage;
+    } else {
+        image = firstImage.src;
+        imageAlt = firstImage.alt || name;
+        imageTitle = firstImage.title || name;
+    }
+}
+
 const discount = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0;
@@ -81,7 +108,8 @@ const getTagStyle = (tag: string) => {
     <a href={productUrl} class="block relative pt-8 px-6 pb-2">
         <OptimizedImage
             src={image}
-            alt={name}
+            alt={imageAlt}
+            title={imageTitle}
             width={400}
             height={400}
             loading="lazy"

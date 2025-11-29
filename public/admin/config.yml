@@ -205,13 +205,51 @@ collections:
       - {label: "Presentación", name: "presentation", widget: "string"}
       - {label: "Precio", name: "price", widget: "number", value_type: "float"}
       - {label: "Precio Original", name: "originalPrice", widget: "number", value_type: "float", required: false}
-      - {label: "Imágenes", name: "images", widget: "list", field: {label: "URL de Imagen", name: "image", widget: "image"}}
+      - label: "Imágenes del Producto"
+        name: "productImages"
+        widget: "object"
+        fields:
+          - label: "Imagen Principal (Cards/Listados)"
+            name: "main"
+            widget: "object"
+            hint: "Imagen con fondo transparente, solo el producto. Aparece en cards, carrito y listados. Tamaño: 800x800px"
+            fields:
+              - {label: "Imagen", name: "src", widget: "image"}
+              - {label: "Texto alternativo (SEO)", name: "alt", widget: "string", hint: "Describe qué se ve. Ej: Aceite de coco virgen en pote de vidrio 850ml"}
+              - {label: "Título", name: "title", widget: "string", required: false}
+          - label: "Imagen Principal Decorada (Hero)"
+            name: "mainDecorated"
+            widget: "object"
+            required: false
+            hint: "Imagen con fondo transparente + ingredientes decorativos sutiles alrededor. Se usa en el hero de la página de producto. Tamaño: 800x800px"
+            fields:
+              - {label: "Imagen", name: "src", widget: "image"}
+              - {label: "Texto alternativo (SEO)", name: "alt", widget: "string", hint: "Describe qué se ve. Ej: Aceite de coco con cocos y hojas de palma"}
+              - {label: "Título", name: "title", widget: "string", required: false}
+          - label: "Galería (Página de Producto)"
+            name: "gallery"
+            widget: "list"
+            required: false
+            hint: "Imágenes del producto en uso: desayuno, cocina, bienestar. Ratio 1:1. Máximo 4 imágenes."
+            fields:
+              - {label: "Imagen", name: "src", widget: "image"}
+              - {label: "Texto alternativo (SEO)", name: "alt", widget: "string"}
+              - {label: "Título", name: "title", widget: "string", required: false}
+          - label: "Imagen para Redes Sociales"
+            name: "social"
+            widget: "object"
+            required: false
+            hint: "Imagen promocional cuadrada (1:1) con beneficios y estilo marketing. Para WhatsApp, Instagram, Facebook."
+            fields:
+              - {label: "Imagen", name: "src", widget: "image"}
+              - {label: "Texto alternativo", name: "alt", widget: "string"}
+              - {label: "Título", name: "title", widget: "string", required: false}
       - {label: "Categorías", name: "categories", widget: "relation", collection: "categories", search_fields: ["name"], value_field: "{{slug}}", display_fields: ["name"], multiple: true}
       - {label: "ID de Variante (Agrupar)", name: "variantId", widget: "string", required: false, hint: "Usa el mismo ID para productos que son variaciones (ej: 'sal-maras')"}
       - {label: "Nombre de Variante (Ej: 500g)", name: "variantName", widget: "string", required: false}
       - {label: "Etiquetas", name: "tags", widget: "list", required: false}
-      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Descripción", name: "description", widget: "markdown"}
       - {label: "Propiedades", name: "properties", widget: "list", required: false}
-      - {label: "Beneficios", name: "benefits", widget: "list", required: false}
-      - {label: "Uso", name: "usage", widget: "text", required: false}
+      - {label: "Beneficios", name: "benefits", widget: "markdown", required: false}
+      - {label: "Modo de Uso", name: "usage", widget: "markdown", required: false}
       - {label: "Video URL", name: "video", widget: "string", required: false}

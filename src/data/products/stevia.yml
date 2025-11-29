@@ -3,8 +3,12 @@ brand: Dulce Vida
 presentation: Frasco 100g
 price: 25
 images:
-  - https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop
-  - https://images.unsplash.com/photo-1518635017498-87f514b751ba?q=80&w=800&auto=format&fit=crop
+  - src: https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop
+    alt: Stevia natural 100% en frasco de 100g - Endulzante cero calorías
+    title: Stevia Natural Dulce Vida
+  - src: https://images.unsplash.com/photo-1518635017498-87f514b751ba?q=80&w=800&auto=format&fit=crop
+    alt: Hojas de stevia natural - Origen vegetal sin químicos
+    title: Stevia Natural - Planta de Origen
 categories:
   - endulzantes
   - aceites

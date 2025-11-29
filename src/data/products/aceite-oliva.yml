@@ -4,7 +4,9 @@ presentation: Botella 500ml
 price: 45
 originalPrice: 55
 images:
-  - /images/uploads/google_ai_studio_2025-11-22t17_33_33.927z.png
+  - src: /images/uploads/google_ai_studio_2025-11-22t17_33_33.927z.png
+    alt: Aceite de oliva extra virgen en botella 500ml - Vista frontal
+    title: Aceite de Oliva Extra Virgen Huerto del Sur
 categories:
   - aceites
 tags:
